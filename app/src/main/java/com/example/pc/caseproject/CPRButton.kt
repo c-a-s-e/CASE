@@ -12,10 +12,12 @@ import java.util.concurrent.TimeUnit
 class CPRButton : Button {
     constructor(context: Context) : super(context) {
         compositeDisposable = CompositeDisposable()
+        background=context.resources.getDrawable(R.drawable.cpr_button_selector)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         compositeDisposable = CompositeDisposable()
+        background=context.resources.getDrawable(R.drawable.cpr_button_selector)
     }
 
     lateinit var pulseUpdateListener:PulseUpdateListener
@@ -33,11 +35,6 @@ class CPRButton : Button {
                         }
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe {
-                            if ((it % 2).toInt() == 1) {
-                                setBackgroundColor(resources.getColor(R.color.colorAccent))
-                            } else {
-                                setBackgroundColor(resources.getColor(R.color.colorPrimary))
-                            }
                             text = it.toString()
                             pulseUpdateListener.updatePulse()
                             Log.d("IntervalExample", it.toString())

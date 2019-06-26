@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.activity_heart.*
 
 
 class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
-    lateinit var mediaPlayer: MediaPlayer
-    lateinit var vibrator: Vibrator
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var vibrator: Vibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +20,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
         mediaPlayer = MediaPlayer.create(this, R.raw.beep)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         cprButton.pulseUpdateListener = this
+        cprButton.isClickable = false
         cprButton.start()
     }
 
@@ -30,7 +31,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
     }
 
     override fun updateTime(seconds: Long) {
-        time.text = seconds.toString()
+        time.text = "${(seconds/60).toString().padStart(2,'0')}:${(seconds%60).toString().padStart(2,'0')}"
     }
 
     override fun updatePulse() {
