@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SOSActivity extends AppCompatActivity {
+public class SOSActivity extends AppCompatActivity implements EmergencyDialogFragment.DialogActionListener {
 
     String sender_address, aed_address, date;
     Double sender_latitude, sender_longitude, aed_latitude, aed_longitude;
@@ -27,7 +27,20 @@ public class SOSActivity extends AppCompatActivity {
             aed_longitude = Double.parseDouble(intent.getStringExtra("aed_longitude"));
             date=intent.getStringExtra("date");
         }
+        showDialog();
     }
 
+    private void showDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        EmergencyDialogFragment popup = new EmergencyDialogFragment();
+        popup.setDialogActionListener(this);
+        popup.show(fm, "popup");
+        ft.commit();
+    }
+
+    @Override
+    public void onDialogDismiss() {
+    }
 }
 
