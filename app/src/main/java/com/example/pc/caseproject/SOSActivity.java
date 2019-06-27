@@ -45,9 +45,9 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_sos);
         SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
         setActionBar((Toolbar) findViewById(R.id.toolbar));
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-        //getActionBar().setDisplayShowHomeEnabled(true);
-        //getActionBar().setTitle("주변 AED 위치");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setTitle("주변 AED 위치");
         showDialog();
 
 
