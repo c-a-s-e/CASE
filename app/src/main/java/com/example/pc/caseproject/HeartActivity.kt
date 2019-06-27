@@ -38,6 +38,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, Emerge
         pauseButton.setOnClickListener { cprButton.stop() }
         text911()
         showDialog()
+        stepView.go(1, true)
     }
 
     override fun onPause() {
@@ -61,14 +62,12 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, Emerge
         ft.commit()
 
         Observable.create<String> { emitter ->
-            Log.d("DelayExample", "Create")
-            emitter.onNext("MindOrks")
+            emitter.onNext("")
             emitter.onComplete()
         }.subscribeOn(Schedulers.io())
                 .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    Log.d("DelayExample", it)
                     popup.dismiss()
                 }
     }

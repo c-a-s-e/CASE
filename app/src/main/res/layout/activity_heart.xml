@@ -42,4 +42,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cprButton" />
 
+    <com.shuhart.stepview.StepView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/stepView"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:sv_steps="@array/cpr_steps"
+        app:sv_selectedCircleColor="@color/colorAccent"
+        app:sv_selectedTextColor="@color/colorAccent"
+        app:sv_animationType="Circle"
+        app:sv_selectedStepNumberColor="@color/white"
+        app:sv_nextTextColor="#AAAAAA"
+        app:sv_doneTextColor="@color/colorAccent"
+        app:sv_doneCircleColor="@color/colorAccent"
+        app:sv_doneStepMarkColor="@color/white"
+        app:sv_doneStepLineColor="@color/colorAccent"
+        app:sv_nextStepLineColor="#AAAAAA"
+        app:sv_stepLineWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pauseButton"/>
+
 </android.support.constraint.ConstraintLayout>
