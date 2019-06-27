@@ -66,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.aedButton)
     public void onAEDButtonClicked(View v) {
-        Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
+        Intent intent = new Intent(this,NearAEDActivity.class);
+        startActivity(intent);
+
+        /*Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
         myAnim.setRepeatMode(Animation.RESTART);
 
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
         AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myAedRequest,false,true);
+        */
     }
 
     @Override
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
     //자신의 현재 위치를 파악하는 메서드 입니다.
     public Location findMyLocation() {
         //**gps 기능이 켜졌는지 확인하는 코드가 필요합니다,
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

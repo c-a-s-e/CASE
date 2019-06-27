@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,8 +36,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class AEDandSOScallUtil {
     private static RequestQueue queue;
 
+    public static APIListener myListener;
+
+    public interface APIListener{
+        void update();
+    }
+
     public static void getAEDdataFromAPI(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
-                                                final boolean isSendPush, final boolean isNewActivity) {
+                                         final boolean isSendPush, final boolean isNewActivity, final APIListener myListener) {
+        AEDandSOScallUtil.myListener=myListener;
         //AED API로 콜해서 넣어서 보내기...
         String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
                 + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
@@ -72,12 +80,19 @@ public class AEDandSOScallUtil {
                             aed_find_request.setAedLatitude(Double.parseDouble(myNL.item(13).getTextContent()));
                             aed_find_request.setAedLongtitude(Double.parseDouble(myNL.item(14).getTextContent()));
 
+                            myListener.update();
+
+                            //push 콜 보내기
+                            requestPush(context,aed_find_request);
+
+                            /*
                             if(isNewActivity) {
                                 Intent intent = new Intent(context, NearAEDActivity.class);
                                 intent.putExtra("AED_find_request", aed_find_request);
                                 requestPush(context,aed_find_request);
                                 ((Activity)context).startActivity(intent);
                             }
+                            */
 
                         } catch (Exception e1) {
                             e1.printStackTrace();
