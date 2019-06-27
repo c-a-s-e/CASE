@@ -40,7 +40,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class AEDandSOScallUtil {
     private static RequestQueue queue;
-
     public static APIListener myListener;
 
     public interface APIListener{
@@ -116,6 +115,41 @@ public class AEDandSOScallUtil {
         queue.add(stringRequest);
     }
 
+    public static void sendAccept(Context context, String user_token){
+        JSONObject acceptData = new JSONObject();
+        try{
+            acceptData.put("priority","high");
+            acceptData.put("to",user_token);
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("type","accept");
+            acceptData.put("data",dataObj);
+
+            sendData(acceptData, new SendResponseListener() {
+                @Override
+                public void onRequestCompleted() {
+                    Log.d("sendData","onRequestCompleted() 호출됨.");
+                    ////Toast.makeText(context,"요청이 완료되었습니다",Toast.LENGTH_LONG);
+                    //addToDB(); 요청 완료되면 DB에 추가
+                }
+
+                @Override
+                public void onRequestStarted() {
+                    //Log.d("sendData","onRequestStarted() 호출됨.");
+                }
+
+                @Override
+                public void onRequestWithError(VolleyError error) {
+                    Log.d("sendData","onRequestWithError() 호출됨.");
+                    // Toast.makeText(context,"요청 실패되었습니다",Toast.LENGTH_LONG);
+                }
+            },context);
+
+        }catch (Exception e){
+            Log.d("accept","accept 메시지 보내는 과정에서 문제 발생");
+        }
+    }
+
     public static void requestPush(Context context, AED_FIND_REQUEST myAEdRequest){
         JSONObject requestData = new JSONObject();
         try {
@@ -141,6 +175,7 @@ public class AEDandSOScallUtil {
                 e.printStackTrace();
             }
 
+            dataObj.put("type","sos");
             dataObj.put("sender_address",nowAddress);
             dataObj.put("sender_latitude",myAEdRequest.getMyLatitude());
             dataObj.put("sender_longitude",myAEdRequest.getMyLongtitiude());
@@ -173,7 +208,7 @@ public class AEDandSOScallUtil {
                 Log.d("sendData","onRequestWithError() 호출됨.");
                // Toast.makeText(context,"요청 실패되었습니다",Toast.LENGTH_LONG);
             }
-        });
+        },context);
     }
 
     public interface SendResponseListener {
@@ -182,7 +217,7 @@ public class AEDandSOScallUtil {
         void onRequestWithError(VolleyError error);
     }
 
-    public static void sendData(JSONObject requestData, final SendResponseListener listener) {
+    public static void sendData(JSONObject requestData, final SendResponseListener listener, Context context) {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 "https://fcm.googleapis.com/fcm/send",
@@ -221,6 +256,7 @@ public class AEDandSOScallUtil {
         };
         request.setShouldCache(false);
         listener.onRequestStarted();
+        if(queue==null) Volley.newRequestQueue(context);
         queue.add(request);
     }
 }
