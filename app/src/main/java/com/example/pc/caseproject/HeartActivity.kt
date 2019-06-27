@@ -1,7 +1,6 @@
 package com.example.pc.caseproject
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -17,15 +16,11 @@ import android.support.v7.widget.Toolbar
 import android.telephony.SmsManager
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_heart.*
-import java.util.concurrent.TimeUnit
 
 
 class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDandSOScallUtil.APIListener {
-    private lateinit var myRequest:AED_FIND_REQUEST
+    private lateinit var myRequest: AED_FIND_REQUEST
 
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator

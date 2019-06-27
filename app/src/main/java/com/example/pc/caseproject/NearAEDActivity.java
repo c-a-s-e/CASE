@@ -11,15 +11,15 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,53 +38,54 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     private AED_FIND_REQUEST myRequest;
     private SupportMapFragment mapFragment;
     String aedAddress, nowAddress;
-    TextView myAddress, aedTextView2;
-
-    @Override
-    public void update() {
-        mapFragment.getMapAsync(NearAEDActivity.this);
-        aedAddress=myRequest.getAedAddress();
-        Log.d("위치 ", aedAddress);
-
-        myAddress=findViewById(R.id.myAddress);
-        myAddress.setText(nowAddress);
-
-        aedTextView2=findViewById(R.id.aedAddress);
-        aedTextView2.setText(aedAddress);
-    }
+    TextView aedTextView, myAddress, aedTextView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_aed);
+        setActionBar((Toolbar) findViewById(R.id.toolbar));
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setTitle("주변 AED 위치");
         showDialog();
 
 
         myRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
 
-        mylatitude=myLocation.getLatitude();
-        mylongitude=myLocation.getLongitude();
+        mylatitude = myLocation.getLatitude();
+        mylongitude = myLocation.getLongitude();
         myRequest.setMyLatitude(mylatitude);
         myRequest.setMyLongtitiude(mylongitude);
 
         Geocoder mGeoCoder = new Geocoder(NearAEDActivity.this, Locale.KOREA);
         List<Address> address;
 
-        try{
-            if(mGeoCoder !=null){
-                address=mGeoCoder.getFromLocation(mylatitude, mylongitude, 1);
-                if(address != null && address.size()>0){
+        try {
+            if (mGeoCoder != null) {
+                address = mGeoCoder.getFromLocation(mylatitude, mylongitude, 1);
+                if (address != null && address.size() > 0) {
                     String currentLocationAddress = address.get(0).getAddressLine(0).toString();
                     nowAddress = currentLocationAddress;
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myRequest,false,true,this);
+        AEDandSOScallUtil.getAEDdataFromAPI(this, myLocation, myRequest, false, true, this);
         mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case android.R.id.home:{
+                Intent intent = new Intent(NearAEDActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showDialog() {
@@ -95,17 +96,33 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     @Override
-    public void onMapReady(final GoogleMap map) {
-        aedlatitude=myRequest.aedLatitude;
-        aedlongitude=myRequest.aedLongtitude;
+    public void update() {
+        mapFragment.getMapAsync(NearAEDActivity.this);
+        aedAddress = myRequest.getAedAddress();
+        Log.d("위치 ", aedAddress);
 
-        Log.d("?꾩튂", String.valueOf(mylatitude)+" "+String.valueOf(mylongitude));
+        aedTextView = findViewById(R.id.address);
+        aedTextView.setText(aedAddress);
+
+        myAddress = findViewById(R.id.myAddress);
+        myAddress.setText(nowAddress);
+
+        aedTextView2 = findViewById(R.id.aedAddress);
+        aedTextView2.setText(aedAddress);
+    }
+
+    @Override
+    public void onMapReady(final GoogleMap map) {
+        aedlatitude = myRequest.aedLatitude;
+        aedlongitude = myRequest.aedLongtitude;
+
+        Log.d("?꾩튂", String.valueOf(mylatitude) + " " + String.valueOf(mylongitude));
 
         LatLng now = new LatLng(mylatitude, mylongitude);
         MarkerOptions mymarkerOptions = new MarkerOptions();
         mymarkerOptions.position(now);
 
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.mymarker);
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.mymarker);
         Bitmap bitmap = bitmapdraw.getBitmap();
         Bitmap myMarker = Bitmap.createScaledBitmap(bitmap, 104, 148, false);
         mymarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMarker));
@@ -117,7 +134,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         aedmarkerOptions.position(aed);
 
 
-        BitmapDrawable bitmapdraw2=(BitmapDrawable)getResources().getDrawable(R.drawable.aedmarker);
+        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.aedmarker);
         Bitmap bitmap2 = bitmapdraw2.getBitmap();
         Bitmap aedMarker = Bitmap.createScaledBitmap(bitmap2, 104, 148, false);
         mymarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(aedMarker));
@@ -125,15 +142,6 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));
-        dismissLoading();
-    }
-
-    private void dismissLoading(){
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("loading");
-        if (prev != null) {
-            LoadingDialogFragment df = (LoadingDialogFragment) prev;
-            df.dismiss();
-        }
     }
 
     public Location findMyLocation() {

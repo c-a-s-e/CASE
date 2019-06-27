@@ -50,7 +50,7 @@ class PulseLoadingView : View {
         length = measure.length
 
         ObjectAnimator.ofFloat(this@PulseLoadingView, "phase", 1.0f, 0.0f).apply {
-            duration=1000
+            duration = 1000
             interpolator = LinearInterpolator()
             repeatCount = INFINITE
             repeatMode = RESTART
