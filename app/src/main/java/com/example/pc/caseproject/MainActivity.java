@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        findViewById(R.id.mainFrame).setVisibility(View.VISIBLE);
-        findViewById(R.id.AEDFindFrame).setVisibility(View.INVISIBLE);
         super.onResume();
     }
 
@@ -68,11 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.aedButton)
     public void onAEDButtonClicked(View v) {
-        findViewById(R.id.mainFrame).setVisibility(View.INVISIBLE);
-        findViewById(R.id.AEDFindFrame).setVisibility(View.VISIBLE);
         Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
         myAnim.setRepeatMode(Animation.RESTART);
-        findViewById(R.id.loading_image).startAnimation(myAnim);
 
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
