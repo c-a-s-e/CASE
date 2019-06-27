@@ -28,6 +28,8 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator
 
+    private lateinit var receiver:MessageBroadcastReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heart)
@@ -56,7 +58,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
         super.onResume()
         val intentFilter=IntentFilter()
         intentFilter.addAction("accepted")
-        val receiver:MessageBroadcastReceiver=MessageBroadcastReceiver()
+        receiver=MessageBroadcastReceiver()
         registerReceiver(receiver, intentFilter)
     }
 
@@ -64,6 +66,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
         super.onPause()
         cprButton.stop()
         mediaPlayer.release()
+        unregisterReceiver(receiver)
     }
 
     override fun onSupportNavigateUp(): Boolean {

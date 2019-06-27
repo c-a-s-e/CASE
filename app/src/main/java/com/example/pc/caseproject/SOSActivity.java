@@ -41,6 +41,12 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sos);
         SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
+        setActionBar((Toolbar) findViewById(R.id.toolbar));
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setDisplayShowHomeEnabled(true);
+        //getActionBar().setTitle("주변 AED 위치");
+        showDialog();
+
 
         /*
         //푸시 눌렀을 때,
@@ -102,6 +108,14 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(SOSActivity.this);
 
     }
+    private void showDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        LoadingDialogFragment popup = new LoadingDialogFragment();
+        popup.show(getSupportFragmentManager(), "loading");
+        ft.commit();
+    }
+
+
     @Override
     public void onMapReady(final GoogleMap map) {
 
