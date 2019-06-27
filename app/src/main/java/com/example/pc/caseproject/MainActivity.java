@@ -1,16 +1,21 @@
 package com.example.pc.caseproject;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +28,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -133,11 +141,89 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.notification:
-                Intent intent = new Intent(this, SOSActivity.class);
-                startActivity(intent);
+                try {
+                    showDialog();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showDialog() throws ParseException {
+        SharedPreferences myPrefs = this.getSharedPreferences("sFile", MODE_PRIVATE);
+        String sender_address = myPrefs.getString("sender_address", null);
+        if(sender_address != null)
+        {
+//            String date = myPrefs.getString("date", null);
+//            String Y = date.substring(29, 34);
+//            String M = date.substring(4, 7);
+//            switch (M)
+//            {
+//                case "Jan":
+//                    M = "01";
+//                    break;
+//                case "Feb":
+//                    M = "02";
+//                    break;
+//                case "Mar":
+//                    M = "03";
+//                    break;
+//                case "Apr":
+//                    M = "04";
+//                    break;
+//                case "May":
+//                    M = "05";
+//                    break;
+//                case "Jun":
+//                    M = "06";
+//                    break;
+//                case "Jul":
+//                    M = "07";
+//                    break;
+//                case "Aug":
+//                    M = "08";
+//                    break;
+//                case "Sep":
+//                    M = "09";
+//                    break;
+//                case "Oct":
+//                    M = "10";
+//                    break;
+//                case "Nov":
+//                    M = "11";
+//                    break;
+//                case "Dec":
+//                    M = "12";
+//                    break;
+//            }
+//
+//            String D = date.substring(8, 10);
+//            String HH = date.substring(11, 19);
+//            date = Y + '-' + M + '-' + D + ' '+ HH;
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date reqdate = formatter.parse(date);
+//
+//            Log.d("lala", date);
+//            String inDate   = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+//            String inTime   = new SimpleDateFormat("HH:mm:ss").format(new Date());
+//            String current_date = inDate.concat(inTime);
+//            Date curdate = formatter.parse(current_date);
+//            Log.d("lala2", current_date);
+//
+//            long diff = curdate.getTime() - reqdate.getTime();
+//            long sec = diff / (1000*60);
+//            Log.d("lala3", Long.toString(sec));
+//
+//            if(sec < 60) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                EmergencyDialogFragment popup = new EmergencyDialogFragment();
+                popup.show(fm, "popup");
+                ft.commit();
+           // }
         }
     }
 }
