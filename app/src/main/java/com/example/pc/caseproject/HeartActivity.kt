@@ -10,7 +10,6 @@ import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.telephony.SmsManager
-import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import io.reactivex.Observable
@@ -30,11 +29,12 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, Emerge
         setSupportActionBar(toolbar as? Toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.title = "흉부 압박"
         mediaPlayer = MediaPlayer.create(this, R.raw.beep)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
+        cprButton.background = resources.getDrawable(R.drawable.cpr_button_static)
         pauseButton.setOnClickListener { cprButton.stop() }
         text911()
         showDialog()
@@ -77,7 +77,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, Emerge
     }
 
     override fun updateTime(seconds: Long) {
-        time.text = "${(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}"
+        time.text = "압박 시간 ${(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}"
     }
 
     override fun updatePulse() {
