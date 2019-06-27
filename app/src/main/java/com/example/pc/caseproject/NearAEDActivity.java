@@ -51,11 +51,13 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
         myRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
-        AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myRequest,false,true,this);
 
         mylatitude=myLocation.getLatitude();
         mylongitude=myLocation.getLongitude();
+        myRequest.setMyLatitude(mylatitude);
+        myRequest.setMyLongtitiude(mylongitude);
 
+        AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myRequest,false,true,this);
         mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
     }
 

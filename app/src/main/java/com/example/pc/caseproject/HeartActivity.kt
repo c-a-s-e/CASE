@@ -42,6 +42,8 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
 
         myRequest = AED_FIND_REQUEST()
         val myLocation = findMyLocation()
+        myRequest.setMyLatitude(myLocation?.latitude)
+        myRequest.setMyLongtitiude(myLocation?.longitude)
         AEDandSOScallUtil.getAEDdataFromAPI(this, myLocation!!, myRequest, false, true, this)
 
         cprButton.pulseUpdateListener = this
