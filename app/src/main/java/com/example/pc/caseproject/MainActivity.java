@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     CPRButton cprButton;
     @BindView(R.id.aedButton)
     Button aedButton;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS};
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         requestAllPermissions();
     }
 
@@ -52,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
         AEDCallUtil.getAEDDataFromAPI(this, myLocation, myAedRequest, false, true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     private void requestAllPermissions() {
