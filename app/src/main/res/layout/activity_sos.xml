@@ -49,8 +49,8 @@
         android:background="#FFFFFF">
         <ImageView
             android:id="@+id/aed_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/sender"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
@@ -91,7 +91,7 @@
             android:id="@+id/aedLocationIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/aedLocation"
+            android:src="@drawable/aedlocation"
             android:layout_margin="4dp"
             app:layout_constraintLeft_toLeftOf="@id/address"
             app:layout_constraintTop_toBottomOf="@id/myLocationIcon"/>
