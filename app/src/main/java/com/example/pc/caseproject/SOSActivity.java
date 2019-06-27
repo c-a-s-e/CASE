@@ -58,6 +58,12 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
 
         }
 
+        if(intent == null){
+            aed_address=sharedPreferences.getString("sender_address", null);
+        }
+
+
+
         FragmentManager fm=getSupportFragmentManager();
         SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
