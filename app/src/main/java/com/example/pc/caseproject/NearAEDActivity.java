@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,10 +31,16 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     double mylatitude, mylongitude, aedlatitude, aedlongitude;
     private AED_FIND_REQUEST myRequest;
     private SupportMapFragment mapFragment;
+    String aedAddress;
+    TextView tv;
 
     @Override
     public void update() {
         mapFragment.getMapAsync(NearAEDActivity.this);
+        aedAddress=myRequest.getAedAddress();
+        Log.d("위치 ", aedAddress);
+        tv=findViewById(R.id.aedAddress);
+        tv.setText(aedAddress);
     }
 
     @Override
