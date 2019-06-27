@@ -74,6 +74,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, Emerge
 
     override fun onDialogDismiss() {
         cprButton.start()
+        loader.startAnimation()
     }
 
     override fun updateTime(seconds: Long) {

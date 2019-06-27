@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,6 +31,14 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(NearAEDActivity.this);
+        showDialog();
+    }
+
+    private void showDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        LoadingDialogFragment popup = new LoadingDialogFragment();
+        popup.show(getSupportFragmentManager(), "loading");
+        ft.commit();
     }
 
     @Override
@@ -68,6 +79,14 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));
+        dismissLoading();
+    }
 
+    private void dismissLoading(){
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("loading");
+        if (prev != null) {
+            LoadingDialogFragment df = (LoadingDialogFragment) prev;
+            df.dismiss();
+        }
     }
 }

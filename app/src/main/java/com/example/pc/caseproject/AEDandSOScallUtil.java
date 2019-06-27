@@ -73,7 +73,6 @@ public class AEDandSOScallUtil {
                             aed_find_request.setAedLongtitude(Double.parseDouble(myNL.item(14).getTextContent()));
 
                             if(isNewActivity) {
-                                Toast.makeText(context, "이제 새 액티비티로 넘어갑니다", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(context, NearAEDActivity.class);
                                 intent.putExtra("AED_find_request", aed_find_request);
                                 requestPush(context,aed_find_request);
