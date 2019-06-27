@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        findViewById(R.id.mainFrame).setVisibility(View.VISIBLE);
-        findViewById(R.id.AEDFindFrame).setVisibility(View.INVISIBLE);
         super.onResume();
     }
 
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic("all");
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         requestAllPermissions();
     }
 
@@ -66,11 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.aedButton)
     public void onAEDButtonClicked(View v) {
-        findViewById(R.id.mainFrame).setVisibility(View.INVISIBLE);
-        findViewById(R.id.AEDFindFrame).setVisibility(View.VISIBLE);
         Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
         myAnim.setRepeatMode(Animation.RESTART);
-        findViewById(R.id.loading_image).startAnimation(myAnim);
 
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();

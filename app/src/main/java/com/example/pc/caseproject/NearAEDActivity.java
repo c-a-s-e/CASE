@@ -2,12 +2,11 @@ package com.example.pc.caseproject;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
-
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,8 +24,9 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_aed);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        FragmentManager fm=getSupportFragmentManager();
+        SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(NearAEDActivity.this);
     }
 
@@ -41,8 +41,6 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
         aedlatitude=myRequest.aedLatitude;
         aedlongitude=myRequest.aedLongtitude;
-
-        Log.d("위치", String.valueOf(mylatitude)+" "+String.valueOf(mylongitude));
 
         LatLng now = new LatLng(mylatitude, mylongitude);
         MarkerOptions mymarkerOptions = new MarkerOptions();
