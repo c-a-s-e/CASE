@@ -34,7 +34,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class AEDandSOScallUtil {
     private static RequestQueue queue;
 
-    public static void getAEDdataFromAPIandSet (final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
+    public static void getAEDdataFromAPI(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
                                                 final boolean isSendPush, final boolean isNewActivity) {
         //AED API로 콜해서 넣어서 보내기...
         String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"

@@ -2,6 +2,7 @@ package com.example.pc.caseproject;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         requestAllPermissions();
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         myAedRequest.setMyLatitude(myLocation.getLatitude());
         myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
-        AEDCallUtil.getAEDDataFromAPI(this, myLocation, myAedRequest, false, true);
+        AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myAedRequest,false,true);
     }
 
     @Override
