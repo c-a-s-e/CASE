@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity {
         getLocationPermission();
     }
 
+    //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
     public void AEDFindButtonClicked(View v){
-        AEDRequest myAedRequest = new AEDRequest();
-        getAEDdataFromAPIandSet(findMyLocation(),myAedRequest);
-        //Intent intent = new Intent(this, 어딘가로);
-        //intent.putExtra("AEDRequest",myAedRequest); //Parceble로 바꾸자
-        //startActivity(intent);
+        AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
+        Location myLocation = findMyLocation();
+        myAedRequest.setMyLatitude(myLocation.getLatitude());
+        myAedRequest.setAedLongtitude(myLocation.getLongitude());
+        //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
+        AEDcallUtil.getAEDdataFromAPIandSet(this,myLocation,myAedRequest,false,true);
     }
 
 
@@ -77,60 +79,6 @@ public class MainActivity extends AppCompatActivity {
             else Log.d("permission","사용자가 권한 거부");
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    //현재 위치와 AEDRequest객체를 생성해서 넣어주면, 제일 가까운 AED의 정보를 AEDRequest에 넣어주는 메서드
-    public void getAEDdataFromAPIandSet (final Location myLocation, final AEDRequest myAedRequest) {
-        //AED API로 콜해서 넣어서 보내기...
-        String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
-                + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
-                + "&WGS84_LON=" + myLocation.getLongitude() + "&WGS84_LAT=" + myLocation.getLatitude() + "&pageNum=1&numOfRows=1";
-
-        queue= Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            response = new String(response.getBytes("ISO-8859-1"),"utf-8");
-
-                            InputSource is = new InputSource(new StringReader(response));
-                            DocumentBuilderFactory myFactory = DocumentBuilderFactory.newInstance();
-                            DocumentBuilder documentBuilder = myFactory.newDocumentBuilder();
-                            Document document = documentBuilder.parse(is);
-
-                            Element root = document.getDocumentElement();
-                            NodeList myNL = root.getChildNodes(); //헤더랑 바디
-                            Element body = (Element)myNL.item(1);
-                            myNL = ((Element)body).getChildNodes();
-                            Element items = (Element)myNL.item(0);
-                            myNL = items.getChildNodes();
-                            Element item = (Element)myNL.item(0);
-                            myNL = item.getChildNodes();
-
-                            myAedRequest.setAed_address(myNL.item(12).getTextContent()+" "+
-                                    myNL.item(5).getTextContent() + " " + myNL.item(0).getTextContent()
-                                    + " " + myNL.item(10).getTextContent() + " " + myNL.item(1).getTextContent());
-
-                            Location aed_location = new Location(myLocation);
-                            aed_location.setLatitude(Double.parseDouble(myNL.item(13).getTextContent()));
-                            aed_location.setLongitude(Double.parseDouble(myNL.item(14).getTextContent()));
-                            myAedRequest.setAed_location(aed_location);
-
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                            Log.d("parsing", "파싱 중 예외 발생"+e1.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("aed 정보","aed 정보 받아오는 중 오류 발생"+error.getMessage());
-            }
-        });
-        stringRequest.setRetryPolicy
-                (new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(stringRequest);
     }
 
     //자신의 현재 위치를 파악하는 메서드 입니다.

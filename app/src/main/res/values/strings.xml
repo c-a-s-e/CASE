@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CASE</string>
+    <string name="title_activity_near_aed">NearAEDActivity</string>
 </resources>
