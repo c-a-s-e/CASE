@@ -24,7 +24,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
         private final double locationRange = 0.5; //AED를 주변으로 이 범위 안에 있을 때만 푸시 발생
 
         @Override
