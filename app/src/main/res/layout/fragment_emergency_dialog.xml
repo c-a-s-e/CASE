@@ -6,23 +6,27 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="330dp"
-        android:layout_height="384dp"
+        android:layout_height="300dp"
         android:background="@drawable/dialog_background">
 
         <TextView
+            android:id="@+id/dialog_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AED SOS 요청"
+            android:textAlignment="center"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.466" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/sos_selector"
             android:text="거절"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,6 +37,7 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/sos_selector"
             android:text="수락"
             app:layout_constraintBottom_toBottomOf="parent"

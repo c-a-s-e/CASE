@@ -42,7 +42,7 @@
             android:layout_height="32dp"
             android:layout_margin="4dp"
             android:layout_marginStart="76dp"
-            android:src="@drawable/aedLocation"
+            android:src="@drawable/aedlocation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

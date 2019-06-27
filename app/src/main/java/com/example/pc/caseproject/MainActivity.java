@@ -26,6 +26,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -210,10 +211,11 @@ public class MainActivity extends AppCompatActivity {
             long sec = (time.getTime()-reqdate.getTime())/1000;
             Log.d("lala3", Long.toString(sec));
 
-            if(sec < 10) {
+            if(sec < 600) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 EmergencyDialogFragment popup = new EmergencyDialogFragment();
+                popup.message=HH+" 근처에서\nSOS 요청이 왔습니다.\n수락하시겠습니까?";
                 popup.show(fm, "popup");
                 ft.commit();
             }

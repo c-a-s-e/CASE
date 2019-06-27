@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import butterknife.OnClick
+import kotlinx.android.synthetic.main.fragment_emergency_dialog.*
 
 class EmergencyDialogFragment : DialogFragment() {
+    lateinit var message:String
 //    lateinit var dialogActionListener: DialogActionListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,7 @@ class EmergencyDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
+        dialog_textview.text=message
         view?.findViewById<Button>(R.id.button)?.setOnClickListener { dismiss() }
         view?.findViewById<Button>(R.id.button2)?.setOnClickListener {
             val intent = Intent(context, SOSActivity::class.java)
