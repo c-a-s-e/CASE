@@ -162,15 +162,15 @@ public class AEDandSOScallUtil {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                Map<String,String> params = new HashMap<String,String>();
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
+                Map<String,String> headers = new HashMap<String,String>();
                 headers.put("Authorization",
-                        "key=AAAAJpBDuCc:APA91bE5Qew4ihTIMJ4v90DlLFCqTjyqiBzNX11WIWnogfYD4MYpW4C7d8eotYYTQNVbfuhpwejMjumUc1mrdVBVcrd4AzG31MEYkSPinRRCa6B9BA2nNii_kwE1m-QTl7e2EdMSX2KS");
+                        "key=AAAAJpBDuCc:APA91bGkulRX5N7mahz_o6E6PGKXPrSAsfpr6QmnMEmX8SbiVS8XX7ChCT1737SvKzuShTvirLtDoGAMlt3bNAKWJ8xW4m0ntdaCYzxJ7ohxl3AavuIP2t2HsmTaQRCCIVHJaouASrPB");
 
                 return headers;
             }

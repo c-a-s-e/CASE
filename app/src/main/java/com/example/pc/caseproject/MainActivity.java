@@ -16,6 +16,8 @@ import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -37,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.SEND_SMS};
 
     @Override
+    protected void onResume() {
+        findViewById(R.id.mainFrame).setVisibility(View.VISIBLE);
+        findViewById(R.id.AEDFindFrame).setVisibility(View.INVISIBLE);
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -55,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.aedButton)
     public void onAEDButtonClicked(View v) {
+        findViewById(R.id.mainFrame).setVisibility(View.INVISIBLE);
+        findViewById(R.id.AEDFindFrame).setVisibility(View.VISIBLE);
+        findViewById(R.id.loading_image).startAnimation(AnimationUtils.loadAnimation
+                        (getApplicationContext(), R.anim.alpha_anim));
+
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
         myAedRequest.setMyLatitude(myLocation.getLatitude());
