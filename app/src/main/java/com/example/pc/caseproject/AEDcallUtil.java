@@ -1,5 +1,6 @@
 package com.example.pc.caseproject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -68,12 +69,13 @@ public class AEDcallUtil {
                             //SOS 요청은 isSendPush가 true 일때만 보낸다.
                             //if(isSendPush) sendPush(context, aed_find_request);
                             //주변 AED 찾기 일 경우에만
-                            if(isNewActivity){
-                                Toast.makeText(context,"이제 새 액티비티로 넘어갑니다", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(context , NearAEDActivity.class);
-                                intent.putExtra("AED_find_request",aed_find_request);
-                                context.startActivity(intent);
+                            if(isNewActivity) {
+                                Toast.makeText(context, "이제 새 액티비티로 넘어갑니다", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(context, NearAEDActivity.class);
+                                intent.putExtra("AED_find_request", aed_find_request);
+                                ((Activity)context).startActivity(intent);
                             }
+
                         } catch (Exception e1) {
                             e1.printStackTrace();
                             Log.d("parsing", "파싱 중 예외 발생"+e1.getMessage());

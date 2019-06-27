@@ -36,7 +36,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RequestQueue queue;
+    //private RequestQueue queue;
     private final static int LOCATION_REQ_CODE=1;
 
     @Override
@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
         myAedRequest.setMyLatitude(myLocation.getLatitude());
-        myAedRequest.setAedLongtitude(myLocation.getLongitude());
+        myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
-        AEDcallUtil.getAEDdataFromAPIandSet(this,myLocation,myAedRequest,false,true);
+        AEDcallUtil.getAEDdataFromAPIandSet(MainActivity.this,myLocation,myAedRequest,false,true);
     }
 
 
