@@ -49,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS};
+    EmergencyDialogFragment popup;
 
     @Override
     protected void onResume() {
+        if(popup!=null) popup.dismiss();
         super.onResume();
     }
 
@@ -214,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
             if(sec < 600) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                EmergencyDialogFragment popup = new EmergencyDialogFragment();
+                popup = new EmergencyDialogFragment();
                 popup.message=HH+" 근처에서\nSOS 요청이 왔습니다.\n수락하시겠습니까?";
                 popup.show(fm, "popup");
                 ft.commit();
