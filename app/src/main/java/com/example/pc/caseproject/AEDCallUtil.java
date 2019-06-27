@@ -25,11 +25,11 @@ import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class AEDcallUtil {
+class AEDCallUtil {
     private static RequestQueue queue;
 
-    public static void getAEDdataFromAPIandSet(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
-                                               final boolean isSendPush, final boolean isNewActivity) {
+    static void getAEDDataFromAPIandSet(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
+                                        final boolean isSendPush, final boolean isNewActivity) {
         //AED API로 콜해서 넣어서 보내기...
         String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
                 + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
@@ -67,19 +67,11 @@ public class AEDcallUtil {
                             //SOS 요청은 isSendPush가 true 일때만 보낸다.
                             //if(isSendPush) sendPush(context, aed_find_request);
                             //주변 AED 찾기 일 경우에만
-<<<<<<< HEAD
-                            if (isNewActivity) {
-                                Toast.makeText(context, "이제 새 액티비티로 넘어갑니다", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(context, NearAEDActivity.class);
-                                intent.putExtra("AED_find_request", aed_find_request);
-                                context.startActivity(intent);
-=======
                             if(isNewActivity) {
                                 Toast.makeText(context, "이제 새 액티비티로 넘어갑니다", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(context, NearAEDActivity.class);
                                 intent.putExtra("AED_find_request", aed_find_request);
                                 ((Activity)context).startActivity(intent);
->>>>>>> 98609e675be24dfa527cf97427307e35742236c4
                             }
 
                         } catch (Exception e1) {

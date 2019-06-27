@@ -16,12 +16,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
     private final static int LOCATION_REQ_CODE = 1;
-=======
-    //private RequestQueue queue;
-    private final static int LOCATION_REQ_CODE=1;
->>>>>>> 98609e675be24dfa527cf97427307e35742236c4
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +32,7 @@ public class MainActivity extends AppCompatActivity {
         myAedRequest.setMyLatitude(myLocation.getLatitude());
         myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
-<<<<<<< HEAD
-        AEDcallUtil.getAEDdataFromAPIandSet(this, myLocation, myAedRequest, false, true);
-=======
-        AEDcallUtil.getAEDdataFromAPIandSet(MainActivity.this,myLocation,myAedRequest,false,true);
->>>>>>> 98609e675be24dfa527cf97427307e35742236c4
+        AEDCallUtil.getAEDDataFromAPIandSet(this, myLocation, myAedRequest, false, true);
     }
 
 
@@ -61,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_REQ_CODE) {
-            if (grantResults != null && grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 Log.d("Permission", "사용자가 권한 승인");
             else Log.d("permission", "사용자가 권한 거부");
         }
