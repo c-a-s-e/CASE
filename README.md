@@ -1,11 +1,11 @@
-## (CPR - AED - SOS - Emergency)
+## CASE (CPR - AED - SOS - Emergency)
 > 심장 질환 환자 및 가족들을 위한 응급 처치 도우미 서비스
 
 <div>
-<img src="https://user-images.githubusercontent.com/29904303/60290028-cc920380-9952-11e9-8b74-9f86e9f403cc.png" width="90%"></img>
-<img src="https://user-images.githubusercontent.com/29904303/60290035-cf8cf400-9952-11e9-96f7-65b603d8c1a2.png" width="90%"></img>
-<img src="https://user-images.githubusercontent.com/29904303/60290995-e92f3b00-9954-11e9-834e-2ec969290140.png" width="90%"></img>
-<img src="https://user-images.githubusercontent.com/29904303/60290998-eaf8fe80-9954-11e9-90bf-0b5b292ab8e9.png" width="90%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290028-cc920380-9952-11e9-8b74-9f86e9f403cc.png" width="24%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290035-cf8cf400-9952-11e9-96f7-65b603d8c1a2.png" width="24%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290995-e92f3b00-9954-11e9-834e-2ec969290140.png" width="24%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290998-eaf8fe80-9954-11e9-90bf-0b5b292ab8e9.png" width="24%"></img>
 </div>
 
 ## Team
