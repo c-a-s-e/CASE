@@ -2,7 +2,7 @@
 <resources>
     <array name="cpr_steps">
         <item>119 신고</item>
-        <item>SOS 요청</item>
-        <item>SOS 수락</item>
+        <item>AED SOS 요청</item>
+        <item>AED SOS 수락</item>
     </array>
 </resources>
