@@ -1,5 +1,5 @@
 ## CASE (CPR - AED - SOS - Emergency)
-> 심장 질환 환자 및 가족들을 위한 응급 처치 도우미 서비스
+> 심정지 환자를 위한 응급 처치 도우미 서비스
 
 <div>
 <img src="https://user-images.githubusercontent.com/29904303/60290028-cc920380-9952-11e9-8b74-9f86e9f403cc.png" width="24%"></img>
