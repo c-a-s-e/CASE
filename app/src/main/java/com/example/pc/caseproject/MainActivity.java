@@ -2,6 +2,7 @@ package com.example.pc.caseproject;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -12,21 +13,37 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
+public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.cprButton)
+    CPRButton cprButton;
+    @BindView(R.id.aedButton)
+    Button aedButton;
     private final static int LOCATION_REQ_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         getLocationPermission();
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
-    public void AEDFindButtonClicked(View v) {
+    @OnClick(R.id.cprButton)
+    public void onCPRButtonClicked(View v) {
+        Intent intent = new Intent(this, HeartActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.aedButton)
+    public void onAEDButtonClicked(View v) {
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
         myAedRequest.setMyLatitude(myLocation.getLatitude());
@@ -39,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
     public void getLocationPermission() {
         //위치권한 수용 요구하기
         int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        if (check == PackageManager.PERMISSION_GRANTED) return; //수신 권한 이미 존재
-        else {
+        if (check != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Toast.makeText(getApplicationContext(), "위치 권한을 허락해야 서비스 이용이 가능합니다.", Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(), "위치 권한을 허락해야 서비스 이용이 가능합니다.", Toast.LENGTH_LONG).show();
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQ_CODE);
             }
         }
+
     }
 
     @Override
@@ -69,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            return myLocation;
+            return myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } else {
             Toast.makeText(getApplicationContext(), "먼저 위치 권한을 확인해주세요", Toast.LENGTH_LONG).show();
             return null;

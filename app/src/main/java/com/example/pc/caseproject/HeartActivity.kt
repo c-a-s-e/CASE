@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_heart.*
 
 
@@ -17,6 +18,9 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heart)
+        setSupportActionBar(toolbar as? Toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         mediaPlayer = MediaPlayer.create(this, R.raw.beep)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         cprButton.pulseUpdateListener = this
@@ -28,6 +32,11 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
         super.onPause()
         cprButton.stop()
         mediaPlayer.release()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     override fun updateTime(seconds: Long) {
