@@ -2,7 +2,6 @@ package com.example.pc.caseproject;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,26 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getLocationPermission();
+        Log.d("mytoken",FirebaseInstanceId.getInstance().getToken()+"토큰입니다");
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
@@ -53,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         myAedRequest.setMyLatitude(myLocation.getLatitude());
         myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
-        AEDcallUtil.getAEDdataFromAPIandSet(MainActivity.this,myLocation,myAedRequest,false,true);
+        AEDandSOScallUtil.getAEDdataFromAPIandSet(MainActivity.this,myLocation,myAedRequest,false,true);
     }
 
 
