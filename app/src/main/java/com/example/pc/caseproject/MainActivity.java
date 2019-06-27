@@ -1,27 +1,19 @@
 package com.example.pc.caseproject;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -55,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         requestAllPermissions();
+        openTutorial();
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
@@ -66,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.aedButton)
     public void onAEDButtonClicked(View v) {
-        Intent intent = new Intent(this,NearAEDActivity.class);
+        Intent intent = new Intent(this, NearAEDActivity.class);
         startActivity(intent);
 
         /*Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
@@ -79,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
         AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myAedRequest,false,true);
         */
+    }
+
+    public void openTutorial() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ShowcaseDialog popup = new ShowcaseDialog();
+        popup.show(getSupportFragmentManager(), "showcase");
+        ft.commit();
     }
 
     @Override

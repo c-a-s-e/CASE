@@ -2,4 +2,9 @@
     <string name="app_name">CASE</string>
     <string name="title_activity_near_aed">NearAEDActivity</string>
     <string name="firebase_server_key">AAAAJpBDuCc:APA91bE5Qew4ihTIMJ4v90DlLFCqTjyqiBzNX11WIWnogfYD4MYpW4C7d8eotYYTQNVbfuhpwejMjumUc1mrdVBVcrd4AzG31MEYkSPinRRCa6B9BA2nNii_kwE1m-QTl7e2EdMSX2KS</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="description_1">흉부압박 시작시 119 신고와 AED SOS를 자동으로 요청합니다.</string>
+    <string name="description_2">흉부 압박시 소리와 진동, 시간과 횟수 제공으로 정확한 압박이 가능합니다.</string>
+    <string name="description_3">119 신고와 AED SOS 진행상황을 실시간으로 제공합니다.</string>
+    <string name="description_4">AED 위치 정보를 제공하여 신속한 대처가 가능합니다.</string>
 </resources>
