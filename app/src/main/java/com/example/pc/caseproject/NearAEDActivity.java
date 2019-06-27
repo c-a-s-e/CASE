@@ -38,16 +38,13 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     private AED_FIND_REQUEST myRequest;
     private SupportMapFragment mapFragment;
     String aedAddress, nowAddress;
-    TextView aedTextView, myAddress, aedTextView2;
+    TextView myAddress, aedTextView2;
 
     @Override
     public void update() {
         mapFragment.getMapAsync(NearAEDActivity.this);
         aedAddress=myRequest.getAedAddress();
         Log.d("위치 ", aedAddress);
-
-        aedTextView=findViewById(R.id.address);
-        aedTextView.setText(aedAddress);
 
         myAddress=findViewById(R.id.myAddress);
         myAddress.setText(nowAddress);
