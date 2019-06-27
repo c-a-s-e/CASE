@@ -51,7 +51,7 @@
             android:id="@+id/aed_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/sender"
+            android:src="@drawable/aedlocation"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -71,7 +71,7 @@
             android:id="@+id/myLocationIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/aed"
+            android:src="@drawable/sender"
             android:layout_margin="4dp"
             app:layout_constraintLeft_toLeftOf="@id/address"
             app:layout_constraintTop_toBottomOf="@id/aed_icon"/>
@@ -91,7 +91,7 @@
             android:id="@+id/aedLocationIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/aedlocation"
+            android:src="@drawable/mylocation"
             android:layout_margin="4dp"
             app:layout_constraintLeft_toLeftOf="@id/address"
             app:layout_constraintTop_toBottomOf="@id/myLocationIcon"/>
