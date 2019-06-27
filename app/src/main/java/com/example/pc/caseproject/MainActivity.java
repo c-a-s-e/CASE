@@ -16,7 +16,12 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
     private final static int LOCATION_REQ_CODE = 1;
+=======
+    //private RequestQueue queue;
+    private final static int LOCATION_REQ_CODE=1;
+>>>>>>> 98609e675be24dfa527cf97427307e35742236c4
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +35,13 @@ public class MainActivity extends AppCompatActivity {
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
         myAedRequest.setMyLatitude(myLocation.getLatitude());
-        myAedRequest.setAedLongtitude(myLocation.getLongitude());
+        myAedRequest.setMyLongtitiude(myLocation.getLongitude());
         //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
+<<<<<<< HEAD
         AEDcallUtil.getAEDdataFromAPIandSet(this, myLocation, myAedRequest, false, true);
+=======
+        AEDcallUtil.getAEDdataFromAPIandSet(MainActivity.this,myLocation,myAedRequest,false,true);
+>>>>>>> 98609e675be24dfa527cf97427307e35742236c4
     }
 
 
