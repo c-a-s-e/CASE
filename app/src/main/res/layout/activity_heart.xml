@@ -7,8 +7,8 @@
     tools:context=".HeartActivity">
 
     <include
-        layout="@layout/toolbar"
         android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -17,52 +17,85 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
+        android:layout_marginTop="36dp"
+        android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <com.example.pc.caseproject.CPRButton
-        android:id="@+id/cprButton"
-        android:layout_width="@dimen/cpr_button_size"
-        android:layout_height="@dimen/cpr_button_size"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonWrapper"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.example.pc.caseproject.CPRButton
+            android:id="@+id/cprButton"
+            android:layout_width="@dimen/cpr_button_size"
+            android:layout_height="@dimen/cpr_button_size"
+            android:textColor="#666666"
+            android:textSize="100sp" />
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="190dp"
+            android:text="압박 횟수"
+            android:textSize="15sp"
+            android:elevation="10dp"
+            android:textColor="#666666" />
+
+
+    </RelativeLayout>
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomGuide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="120dp" />
 
     <Button
         android:id="@+id/pauseButton"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:text="pause"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/red_button_background"
+        android:padding="8dp"
+        android:text="중지"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/bottomGuide"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cprButton" />
+        app:layout_constraintTop_toBottomOf="@id/buttonWrapper" />
 
     <com.shuhart.stepview.StepView
+        android:id="@+id/stepView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:id="@+id/stepView"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        app:sv_steps="@array/cpr_steps"
-        app:sv_selectedCircleColor="@color/colorAccent"
-        app:sv_selectedTextColor="@color/colorAccent"
-        app:sv_animationType="Circle"
-        app:sv_selectedStepNumberColor="@color/white"
-        app:sv_nextTextColor="#AAAAAA"
-        app:sv_doneTextColor="@color/colorAccent"
-        app:sv_doneCircleColor="@color/colorAccent"
-        app:sv_doneStepMarkColor="@color/white"
-        app:sv_doneStepLineColor="@color/colorAccent"
-        app:sv_nextStepLineColor="#AAAAAA"
-        app:sv_stepLineWidth="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pauseButton"/>
+        app:layout_constraintTop_toBottomOf="@id/bottomGuide"
+        app:sv_animationType="Circle"
+        app:sv_doneCircleColor="@color/colorAccent"
+        app:sv_doneStepLineColor="@color/colorAccent"
+        app:sv_doneStepMarkColor="@color/white"
+        app:sv_doneTextColor="@color/colorAccent"
+        app:sv_nextStepCircleColor="@color/gray"
+        app:sv_nextStepCircleEnabled="true"
+        app:sv_nextStepLineColor="#AAAAAA"
+        app:sv_nextTextColor="#AAAAAA"
+        app:sv_selectedCircleColor="@color/colorAccent"
+        app:sv_selectedStepNumberColor="@color/white"
+        app:sv_selectedTextColor="@color/colorAccent"
+        app:sv_stepLineWidth="2dp"
+        app:sv_steps="@array/cpr_steps" />
 
 </android.support.constraint.ConstraintLayout>
