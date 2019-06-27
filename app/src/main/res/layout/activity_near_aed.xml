@@ -1,35 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NearAEDActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/near_toolbar"
+    <Toolbar android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:text="AED 위치 확인"
-            android:layout_width="wrap_content"
-            android:textSize="20sp"
-            android:layout_height="30dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/logo_red"
-            android:layout_gravity="center"
-            android:textColor="#474747"
-            android:textStyle="bold"/>
-    </android.support.v7.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
         android:id="@+id/map"
@@ -38,83 +24,77 @@
         android:layout_height="500dp"
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/near_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="172dp"
-        app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="#FFFFFF"
         android:elevation="10dp"
-        android:background="#FFFFFF">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map">
+
         <ImageView
             android:id="@+id/aed_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/aed_icon"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:src="@drawable/aed_icon"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:gravity="left"
             android:text="srgsgsdg"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintTop_toTopOf="@id/aed_icon"
             app:layout_constraintBottom_toBottomOf="@id/aed_icon"
-            app:layout_constraintLeft_toRightOf="@id/aed_icon"/>
+            app:layout_constraintLeft_toRightOf="@id/aed_icon"
+            app:layout_constraintTop_toTopOf="@id/aed_icon" />
 
         <ImageView
             android:id="@+id/myLocationIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/aed_icon"
             android:layout_margin="4dp"
+            android:src="@drawable/aed_icon"
             app:layout_constraintLeft_toLeftOf="@id/address"
-            app:layout_constraintTop_toBottomOf="@id/aed_icon"/>
+            app:layout_constraintTop_toBottomOf="@id/aed_icon" />
 
         <TextView
             android:id="@+id/myAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:gravity="left"
             android:text="srgsgsdg"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintTop_toTopOf="@id/myLocationIcon"
             app:layout_constraintBottom_toBottomOf="@id/myLocationIcon"
-            app:layout_constraintLeft_toRightOf="@id/myLocationIcon"/>
+            app:layout_constraintLeft_toRightOf="@id/myLocationIcon"
+            app:layout_constraintTop_toTopOf="@id/myLocationIcon" />
 
         <ImageView
             android:id="@+id/aedLocationIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/aed_icon"
             android:layout_margin="4dp"
+            android:src="@drawable/aed_icon"
             app:layout_constraintLeft_toLeftOf="@id/address"
-            app:layout_constraintTop_toBottomOf="@id/myLocationIcon"/>
+            app:layout_constraintTop_toBottomOf="@id/myLocationIcon" />
 
         <TextView
             android:id="@+id/aedAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:gravity="left"
             android:text="srgsgsdg"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintTop_toTopOf="@id/aedLocationIcon"
             app:layout_constraintBottom_toBottomOf="@id/aedLocationIcon"
-            app:layout_constraintLeft_toRightOf="@id/aedLocationIcon"/>
-
-
-
+            app:layout_constraintLeft_toRightOf="@id/aedLocationIcon"
+            app:layout_constraintTop_toTopOf="@id/aedLocationIcon" />
     </android.support.constraint.ConstraintLayout>
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>
