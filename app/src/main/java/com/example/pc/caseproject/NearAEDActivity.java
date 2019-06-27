@@ -59,6 +59,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_near_aed);
         showDialog();
 
+
         myRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
 
