@@ -36,7 +36,6 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         //푸시 눌렀을 때,
         Intent intent = getIntent();
         if(intent != null){
-
             sender_address = intent.getStringExtra("sender_address");
             aed_address = intent.getStringExtra("aed_address");
             sender_latitude = Double.parseDouble(intent.getStringExtra("sender_latitude"));
