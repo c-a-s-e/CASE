@@ -16,7 +16,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -28,6 +27,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         @Override
         public void onMessageReceived(RemoteMessage remoteMessage) {
+            Log.d("accept","메시지받음");
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) return; //자기 위치 파악 불가하면 그냥 무시
 
             Log.d("accept","메시지받음");
@@ -38,10 +38,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
             //Sender가 본인이 아니고, 위치가 일정 범위 안에 있는 경우
-            if(!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
+            /*if(//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
                     Math.abs(myLocation.getLatitude()-Double.parseDouble(data.get("aed_latitude")))<=locationRange &&
-                            Math.abs(myLocation.getLongitude()-Double.parseDouble(data.get("aed_longitude")))<=locationRange)
+                            Math.abs(myLocation.getLongitude()-Double.parseDouble(data.get("aed_longitude")))<=locationRange)*/
                 showNotification("주변에서 위급상황 발생",data.get("sender_address")+"에서 위급상황 발생. AED를 가져다주세요");
+
         }
 
         private void showNotification(String title, String message) {
