@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -122,16 +125,33 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         LatLng sender = new LatLng(sender_latitude, sender_longitude);
         MarkerOptions sendermarkerOptions = new MarkerOptions();
         sendermarkerOptions.position(sender);
+
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.sendermarker);
+        Bitmap bitmap = bitmapdraw.getBitmap();
+        Bitmap senderMarker = Bitmap.createScaledBitmap(bitmap, 104, 148, false);
+        sendermarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(senderMarker));
         map.addMarker(sendermarkerOptions);
 
         LatLng now = new LatLng(my_latitude, my_longitude);
-        MarkerOptions nowmarkerOptions = new MarkerOptions();
-        nowmarkerOptions.position(now);
-        map.addMarker(nowmarkerOptions);
+        MarkerOptions mymarkerOptions = new MarkerOptions();
+        mymarkerOptions.position(now);
+
+
+        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.mymarker);
+        Bitmap bitmap2 = bitmapdraw2.getBitmap();
+        Bitmap myMarker = Bitmap.createScaledBitmap(bitmap2, 104, 148, false);
+        mymarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMarker));
+        map.addMarker(mymarkerOptions);
 
         LatLng aed = new LatLng(aed_latitude, aed_longitude);
         MarkerOptions aedmarkerOptions = new MarkerOptions();
         aedmarkerOptions.position(aed);
+
+
+        BitmapDrawable bitmapdraw3 = (BitmapDrawable) getResources().getDrawable(R.drawable.aed);
+        Bitmap bitmap3 = bitmapdraw3.getBitmap();
+        Bitmap aedMarker = Bitmap.createScaledBitmap(bitmap3, 88, 80, false);
+        aedmarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(aedMarker));
         map.addMarker(aedmarkerOptions);
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));
