@@ -25,6 +25,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import java.io.StringReader;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +68,7 @@ public class AEDandSOScallUtil {
                             aed_find_request.setAedAddress(myNL.item(12).getTextContent()+" "+
                                     myNL.item(5).getTextContent() + " " + myNL.item(0).getTextContent()
                                     + " " + myNL.item(10).getTextContent() + " " + myNL.item(1).getTextContent());
+
                             aed_find_request.setAedLatitude(Double.parseDouble(myNL.item(13).getTextContent()));
                             aed_find_request.setAedLongtitude(Double.parseDouble(myNL.item(14).getTextContent()));
 
@@ -106,7 +108,8 @@ public class AEDandSOScallUtil {
             dataObj.put("sender_address","내 주소");
             dataObj.put("sender_latitude",myAEdRequest.getMyLatitude());
             dataObj.put("sender_longitude",myAEdRequest.getMyLongtitiude());
-            dataObj.put("date","일단 날짜");
+            long now = System.currentTimeMillis();
+            dataObj.put("date",(new Date(now)).toString());
             dataObj.put("aed_address",myAEdRequest.getAedAddress());
             dataObj.put("aed_latitude",myAEdRequest.getAedLatitude());
             dataObj.put("aed_longitude",myAEdRequest.getAedLongtitude());
@@ -162,15 +165,15 @@ public class AEDandSOScallUtil {
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                Map<String,String> params = new HashMap<String,String>();
                 return params;
             }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<>();
+                Map<String,String> headers = new HashMap<String,String>();
                 headers.put("Authorization",
-                        "key=AAAAJpBDuCc:APA91bE5Qew4ihTIMJ4v90DlLFCqTjyqiBzNX11WIWnogfYD4MYpW4C7d8eotYYTQNVbfuhpwejMjumUc1mrdVBVcrd4AzG31MEYkSPinRRCa6B9BA2nNii_kwE1m-QTl7e2EdMSX2KS");
+                        "key=AAAAJpBDuCc:APA91bGkulRX5N7mahz_o6E6PGKXPrSAsfpr6QmnMEmX8SbiVS8XX7ChCT1737SvKzuShTvirLtDoGAMlt3bNAKWJ8xW4m0ntdaCYzxJ7ohxl3AavuIP2t2HsmTaQRCCIVHJaouASrPB");
 
                 return headers;
             }

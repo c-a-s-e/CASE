@@ -15,14 +15,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NearAEDActivity"></activity>
+        <activity android:name=".SOSActivity"></activity>
+        <activity android:name=".NearAEDActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HeartActivity"></activity>
+        <activity android:name=".HeartActivity" />
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc">
+        </meta-data>
     </application>
 
 </manifest>

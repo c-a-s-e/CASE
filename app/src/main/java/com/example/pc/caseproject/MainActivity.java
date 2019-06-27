@@ -12,10 +12,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -38,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.SEND_SMS};
 
     @Override
+    protected void onResume() {
+        findViewById(R.id.mainFrame).setVisibility(View.VISIBLE);
+        findViewById(R.id.AEDFindFrame).setVisibility(View.INVISIBLE);
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.aedButton)
     public void onAEDButtonClicked(View v) {
+        findViewById(R.id.mainFrame).setVisibility(View.INVISIBLE);
+        findViewById(R.id.AEDFindFrame).setVisibility(View.VISIBLE);
+        Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
+        myAnim.setRepeatMode(Animation.RESTART);
+        findViewById(R.id.loading_image).startAnimation(myAnim);
+
         AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
         myAedRequest.setMyLatitude(myLocation.getLatitude());
@@ -110,5 +127,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.notification:
+                Intent intent = new Intent(this, SOSActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
