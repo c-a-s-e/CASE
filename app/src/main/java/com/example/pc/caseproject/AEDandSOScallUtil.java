@@ -3,6 +3,8 @@ package com.example.pc.caseproject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.provider.Settings;
 import android.util.Log;
@@ -25,9 +27,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -119,7 +124,24 @@ public class AEDandSOScallUtil {
 
             JSONObject dataObj = new JSONObject();
             dataObj.put("sender-token", FirebaseInstanceId.getInstance().getToken());
-            dataObj.put("sender_address","내 주소");
+
+            //위,경도 주소로 변환
+            Geocoder mGeoCoder = new Geocoder(context, Locale.KOREA);
+            List<Address> address;
+            String nowAddress="";
+            try{
+                if(mGeoCoder !=null){
+                    address=mGeoCoder.getFromLocation(myAEdRequest.getMyLatitude(), myAEdRequest.getMyLongtitiude(), 1);
+                    if(address != null && address.size()>0){
+                        String currentLocationAddress = address.get(0).getAddressLine(0).toString();
+                        nowAddress = currentLocationAddress;
+                    }
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+            dataObj.put("sender_address",nowAddress);
             dataObj.put("sender_latitude",myAEdRequest.getMyLatitude());
             dataObj.put("sender_longitude",myAEdRequest.getMyLongtitiude());
             long now = System.currentTimeMillis();
