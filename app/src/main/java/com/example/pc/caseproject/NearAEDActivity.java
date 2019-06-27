@@ -39,7 +39,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(NearAEDActivity.this);
         aedAddress=myRequest.getAedAddress();
         Log.d("위치 ", aedAddress);
-        tv=findViewById(R.id.textView);
+        tv=findViewById(R.id.aedAddress);
         tv.setText(aedAddress);
     }
 

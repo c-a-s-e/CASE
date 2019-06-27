@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import kotlinx.android.synthetic.main.activity_heart.*
 
 class LoadingDialogFragment:DialogFragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,5 +24,10 @@ class LoadingDialogFragment:DialogFragment(){
             }
         }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loader.startAnimation()
     }
 }
