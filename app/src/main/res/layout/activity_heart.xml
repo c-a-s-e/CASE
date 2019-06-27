@@ -24,9 +24,9 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <RelativeLayout
+        android:id="@+id/buttonWrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonWrapper"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -38,18 +38,17 @@
             android:layout_height="@dimen/cpr_button_size"
             android:textColor="#666666"
             android:textSize="100sp" />
+
         <TextView
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="190dp"
-            android:text="압박 횟수"
-            android:textSize="15sp"
             android:elevation="10dp"
-            android:textColor="#666666" />
-
-
+            android:text="압박 횟수"
+            android:textColor="#666666"
+            android:textSize="15sp" />
     </RelativeLayout>
 
 
@@ -74,12 +73,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonWrapper" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottomGuide">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자동 요청" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="진행 상황" />
+
+    </LinearLayout>
+
     <com.shuhart.stepview.StepView
         android:id="@+id/stepView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:paddingLeft="84dp"
+        android:paddingRight="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottomGuide"
@@ -96,6 +117,7 @@
         app:sv_selectedStepNumberColor="@color/white"
         app:sv_selectedTextColor="@color/colorAccent"
         app:sv_stepLineWidth="2dp"
-        app:sv_steps="@array/cpr_steps" />
+        app:sv_steps="@array/cpr_steps"
+        app:sv_textSize="11sp" />
 
 </android.support.constraint.ConstraintLayout>

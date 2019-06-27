@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDandSOScallUtil.APIListener {
     private lateinit var myRequest:AED_FIND_REQUEST
-    
+
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator
 
