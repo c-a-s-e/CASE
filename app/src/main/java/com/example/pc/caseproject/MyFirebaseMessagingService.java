@@ -41,22 +41,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             editor.putString("aed_address",data.get("aed_address"));
             editor.putString("aed_latitude",data.get("aed_latitude"));
             editor.putString("aed_longitude",data.get("aed_longitude"));
-            editor.commit();
+
 
             //Receiver 위치 파악
             LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
+            editor.putString("my_latitude",myLocation.getLatitude()+"");
+            editor.putString("my_longitude",myLocation.getLongitude()+"");
+            editor.commit();
+
             //Sender가 본인이 아니고, 위치가 일정 범위 안에 있는 경우
             if(//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
                     Math.abs(myLocation.getLatitude()-Double.parseDouble(data.get("aed_latitude")))<=locationRange &&
                             Math.abs(myLocation.getLongitude()-Double.parseDouble(data.get("aed_longitude")))<=locationRange)
-                showNotification("주변에서 위급상황 발생",data.get("sender_address")+"에서 위급상황 발생. AED를 가져다주세요",data, myLocation);
+                showNotification("주변에서 위급상황 발생",data.get("sender_address")+"에서 위급상황 발생. AED를 가져다주세요");
         }
 
-        private void showNotification(String title, String message, Map<String, String> data, Location myLocation) {
+        private void showNotification(String title, String message) {
             Intent intent = new Intent(this, SOSActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            /*
             intent.putExtra("sender-token",data.get("sender-token"));
             intent.putExtra("sender_address",data.get("sender_address"));
             intent.putExtra("sender_latitude",data.get("sender_latitude"));
@@ -67,6 +72,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("aed_longitude",data.get("aed_longitude"));
             intent.putExtra("my_latitude",myLocation.getLatitude());
             intent.putExtra("my_longitude",myLocation.getLongitude());
+            */
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
 

@@ -24,8 +24,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    String sender_address, aed_address, date;
-    Double sender_latitude, sender_longitude, aed_latitude, aed_longitude, my_latitude, my_longtitude;
+    String sender_address, aed_address, date, sender_token;
+    Double sender_latitude, sender_longitude, aed_latitude, aed_longitude, my_latitude, my_longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_sos);
         SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
 
+        /*
         //푸시 눌렀을 때,
         Intent intent = getIntent();
         if(intent != null){
@@ -46,17 +47,18 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
             my_latitude=intent.getDoubleExtra("my_latitude", 0);
             my_longtitude=intent.getDoubleExtra("my_longitude", 0);
 
-        }else{
-            sharedPreferences.getString("seder-token", null);
-            sharedPreferences.getString("sender_address", null);
-            sharedPreferences.getString("sender_latitude", null);
-            sharedPreferences.getString("sender_longitude", null);
-            sharedPreferences.getString("data", null);
-            sharedPreferences.getString("aed_address", null);
-            sharedPreferences.getString("aed_latitude", null);
-            sharedPreferences.getString("aed_longitude", null);
-
-        }
+        }else{ */
+            sender_token = sharedPreferences.getString("seder-token", null);
+            sender_address = sharedPreferences.getString("sender_address", null);
+            sender_latitude = Double.parseDouble(sharedPreferences.getString("sender_latitude", null));
+            sender_longitude = Double.parseDouble(sharedPreferences.getString("sender_longitude", null));
+            date = sharedPreferences.getString("data", null);
+            aed_address = sharedPreferences.getString("aed_address", null);
+            aed_latitude = Double.parseDouble(sharedPreferences.getString("aed_latitude", null));
+            aed_longitude = Double.parseDouble(sharedPreferences.getString("aed_longitude", null));
+            my_latitude =  Double.parseDouble(sharedPreferences.getString("my_latitude", null));
+            my_longitude = Double.parseDouble(sharedPreferences.getString("my_longitude", null));
+        //}
 
         FragmentManager fm=getSupportFragmentManager();
         SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
@@ -72,7 +74,7 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         sendermarkerOptions.position(sender);
         map.addMarker(sendermarkerOptions);
 
-        LatLng now = new LatLng(my_latitude, my_longtitude);
+        LatLng now = new LatLng(my_latitude, my_longitude);
         MarkerOptions nowmarkerOptions = new MarkerOptions();
         nowmarkerOptions.position(now);
         map.addMarker(nowmarkerOptions);
@@ -85,6 +87,8 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));
 
     }
+
+    /*
     public Location findMyLocation() {
         //**gps 기능이 켜졌는지 확인하는 코드가 필요합니다,
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -95,6 +99,6 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
             return null;
         }
     }
-
+    */
 }
 
