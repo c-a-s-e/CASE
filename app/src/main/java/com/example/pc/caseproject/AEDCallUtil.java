@@ -28,8 +28,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 class AEDCallUtil {
     private static RequestQueue queue;
 
-    static void getAEDDataFromAPIandSet(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
-                                        final boolean isSendPush, final boolean isNewActivity) {
+    static void getAEDDataFromAPI(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
+                                  final boolean isSendPush, final boolean isNewActivity) {
         //AED API로 콜해서 넣어서 보내기...
         String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
                 + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
@@ -42,7 +42,6 @@ class AEDCallUtil {
                     public void onResponse(String response) {
                         try {
                             response = new String(response.getBytes("ISO-8859-1"), "utf-8");
-                            //((TextView)findViewById(R.id.textView)).setText(response);
 
                             InputSource is = new InputSource(new StringReader(response));
                             DocumentBuilderFactory myFactory = DocumentBuilderFactory.newInstance();

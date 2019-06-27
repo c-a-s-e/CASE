@@ -8,6 +8,9 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.telephony.SmsManager
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import kotlinx.android.synthetic.main.activity_heart.*
 
 
@@ -21,11 +24,14 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
         setSupportActionBar(toolbar as? Toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         mediaPlayer = MediaPlayer.create(this, R.raw.beep)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
         cprButton.start()
+        pauseButton.setOnClickListener { cprButton.stop() }
+        text911()
     }
 
     override fun onPause() {
@@ -40,7 +46,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
     }
 
     override fun updateTime(seconds: Long) {
-        time.text = "${(seconds/60).toString().padStart(2,'0')}:${(seconds%60).toString().padStart(2,'0')}"
+        time.text = "${(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}"
     }
 
     override fun updatePulse() {
@@ -49,6 +55,17 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener {
             vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             vibrator.vibrate(300)
+        }
+    }
+
+    private fun text911() {
+        val content = "테스트"
+        val number = "1"
+        try {
+            val smsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage(number, null, content, null, null)
+        } catch (e: Throwable) {
+            Toast.makeText(this, "119 fail", LENGTH_LONG).show()
         }
     }
 }
