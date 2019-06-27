@@ -29,7 +29,8 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();
-        if( data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken())) return;
+        Log.e("type", data.get("type"));
+        //if( data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken())) return;
         if (data.get("type").equals("accept")) {
             Intent intent = new Intent();
             intent.setAction("accepted");

@@ -2,6 +2,7 @@ package com.example.pc.caseproject;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,7 +14,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -47,6 +50,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         getActionBar().setTitle("주변 AED 위치");
         showDialog();
 
+
         myRequest = new AED_FIND_REQUEST();
         Location myLocation = findMyLocation();
 
@@ -72,6 +76,16 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
         AEDandSOScallUtil.getAEDdataFromAPI(this, myLocation, myRequest, false, true, this);
         mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case android.R.id.home:{
+                Intent intent = new Intent(NearAEDActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showDialog() {
