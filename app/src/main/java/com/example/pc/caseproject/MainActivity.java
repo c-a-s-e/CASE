@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS};
     EmergencyDialogFragment popup;
+    ShowcaseDialog showcase;
 
     @Override
     protected void onResume() {
-        if(popup!=null) popup.dismiss();
+        if (popup != null) popup.dismiss();
+        openTutorial();
         super.onResume();
     }
 
@@ -70,24 +71,29 @@ public class MainActivity extends AppCompatActivity {
     public void onAEDButtonClicked(View v) {
         Intent intent = new Intent(this, NearAEDActivity.class);
         startActivity(intent);
-
-        /*Animation myAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha_anim);
-        myAnim.setRepeatMode(Animation.RESTART);
-
-        AED_FIND_REQUEST myAedRequest = new AED_FIND_REQUEST();
-        Location myLocation = findMyLocation();
-        myAedRequest.setMyLatitude(myLocation.getLatitude());
-        myAedRequest.setMyLongtitiude(myLocation.getLongitude());
-        //이 메서드 안에서 자동으로 액티비티 넘어갑니다.
-        AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myAedRequest,false,true);
-        */
     }
 
     public void openTutorial() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ShowcaseDialog popup = new ShowcaseDialog();
-        popup.show(getSupportFragmentManager(), "showcase");
-        ft.commit();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("sFile", MODE_PRIVATE);
+        boolean tutorial_opened = sharedPreferences.getBoolean("tutorial_flag", false);
+        if (!tutorial_opened) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            showcase = new ShowcaseDialog();
+            showcase.show(getSupportFragmentManager(), "showcase");
+            ft.commit();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("tutorial_flag", true);
+            editor.apply();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sharedPreferences = this.getSharedPreferences("sFile", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("tutorial_flag", false);
+        editor.apply();
     }
 
     @Override
@@ -120,23 +126,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    //자신의 현재 위치를 파악하는 메서드 입니다.
-    public Location findMyLocation() {
-        //**gps 기능이 켜졌는지 확인하는 코드가 필요합니다,
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestAllPermissions();
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            return myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } else {
-            Toast.makeText(getApplicationContext(), "먼저 위치 권한을 확인해주세요", Toast.LENGTH_LONG).show();
-            return null;
-        }
-    }
-    */
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -156,13 +145,11 @@ public class MainActivity extends AppCompatActivity {
     private void showDialog() throws ParseException {
         SharedPreferences myPrefs = this.getSharedPreferences("sFile", MODE_PRIVATE);
         String sender_address = myPrefs.getString("sender_address", null);
-        if(sender_address != null)
-        {
+        if (sender_address != null) {
             String date = myPrefs.getString("date", null);
             String Y = date.substring(29, 34);
             String M = date.substring(4, 7);
-            switch (M)
-            {
+            switch (M) {
                 case "Jan":
                     M = "01";
                     break;
@@ -203,19 +190,19 @@ public class MainActivity extends AppCompatActivity {
 
             String D = date.substring(8, 10);
             String HH = date.substring(11, 19);
-            date = Y + '-' + M + '-' + D + ' '+ HH;
+            date = Y + '-' + M + '-' + D + ' ' + HH;
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date reqdate = formatter.parse(date);
 
             Date time = new Date();
-            long sec = (time.getTime()-reqdate.getTime())/1000;
+            long sec = (time.getTime() - reqdate.getTime()) / 1000;
             Log.d("lala3", Long.toString(sec));
 
-            if(sec < 600) {
+            if (sec < 600) {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 popup = new EmergencyDialogFragment();
-                popup.message=HH+" 근처에서\nSOS 요청이 왔습니다.\n수락하시겠습니까?";
+                popup.message = HH + " 근처에서\nSOS 요청이 왔습니다.\n수락하시겠습니까?";
                 popup.show(fm, "popup");
                 ft.commit();
             }

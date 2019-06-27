@@ -1,24 +1,15 @@
 package com.example.pc.caseproject;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -43,7 +34,7 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sos);
-        SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("sFile", MODE_PRIVATE);
         setActionBar((Toolbar) findViewById(R.id.toolbar));
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
@@ -66,51 +57,52 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
             my_longtitude=intent.getDoubleExtra("my_longitude", 0);
 
         }else{ */
-            sender_token = sharedPreferences.getString("sender-token", null);
-            sender_address = sharedPreferences.getString("sender_address", null);
-            sender_latitude = Double.parseDouble(sharedPreferences.getString("sender_latitude", null));
-            sender_longitude = Double.parseDouble(sharedPreferences.getString("sender_longitude", null));
-            date = sharedPreferences.getString("date", null);
-            aed_address = sharedPreferences.getString("aed_address", null);
-            aed_latitude = Double.parseDouble(sharedPreferences.getString("aed_latitude", null));
-            aed_longitude = Double.parseDouble(sharedPreferences.getString("aed_longitude", null));
-            my_latitude =  Double.parseDouble(sharedPreferences.getString("my_latitude", null));
-            my_longitude = Double.parseDouble(sharedPreferences.getString("my_longitude", null));
+        sender_token = sharedPreferences.getString("sender-token", null);
+        sender_address = sharedPreferences.getString("sender_address", null);
+        sender_latitude = Double.parseDouble(sharedPreferences.getString("sender_latitude", null));
+        sender_longitude = Double.parseDouble(sharedPreferences.getString("sender_longitude", null));
+        date = sharedPreferences.getString("date", null);
+        aed_address = sharedPreferences.getString("aed_address", null);
+        aed_latitude = Double.parseDouble(sharedPreferences.getString("aed_latitude", null));
+        aed_longitude = Double.parseDouble(sharedPreferences.getString("aed_longitude", null));
+        my_latitude = Double.parseDouble(sharedPreferences.getString("my_latitude", null));
+        my_longitude = Double.parseDouble(sharedPreferences.getString("my_longitude", null));
         //}
-        AEDandSOScallUtil.sendAccept(this,sender_token);
+        AEDandSOScallUtil.sendAccept(this, sender_token);
 
         Geocoder mGeoCoder = new Geocoder(SOSActivity.this, Locale.KOREA);
         List<Address> address;
 
-        try{
-            if(mGeoCoder !=null){
-                address=mGeoCoder.getFromLocation(my_latitude, my_longitude, 1);
-                if(address != null && address.size()>0){
+        try {
+            if (mGeoCoder != null) {
+                address = mGeoCoder.getFromLocation(my_latitude, my_longitude, 1);
+                if (address != null && address.size() > 0) {
                     String currentLocationAddress = address.get(0).getAddressLine(0).toString();
                     nowAddress = currentLocationAddress;
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        aedTextView=findViewById(R.id.address);
+        aedTextView = findViewById(R.id.address);
         aedTextView.setText(aed_address);
 
-        senderAddress=findViewById(R.id.myAddress);
+        senderAddress = findViewById(R.id.myAddress);
         senderAddress.setText(sender_address);
 
-        myAddress=findViewById(R.id.aedAddress);
+        myAddress = findViewById(R.id.aedAddress);
         myAddress.setText(nowAddress);
 
 
-        FragmentManager fm=getSupportFragmentManager();
-        SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
+        FragmentManager fm = getSupportFragmentManager();
+        SupportMapFragment f = (SupportMapFragment) fm.findFragmentById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(SOSActivity.this);
 
     }
+
     private void showDialog() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         LoadingDialogFragment popup = new LoadingDialogFragment();
@@ -118,6 +110,11 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         ft.commit();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     public void onMapReady(final GoogleMap map) {
