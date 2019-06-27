@@ -48,11 +48,11 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
             my_longtitude=intent.getDoubleExtra("my_longitude", 0);
 
         }else{ */
-            sender_token = sharedPreferences.getString("seder-token", null);
+            sender_token = sharedPreferences.getString("sender-token", null);
             sender_address = sharedPreferences.getString("sender_address", null);
             sender_latitude = Double.parseDouble(sharedPreferences.getString("sender_latitude", null));
             sender_longitude = Double.parseDouble(sharedPreferences.getString("sender_longitude", null));
-            date = sharedPreferences.getString("data", null);
+            date = sharedPreferences.getString("date", null);
             aed_address = sharedPreferences.getString("aed_address", null);
             aed_latitude = Double.parseDouble(sharedPreferences.getString("aed_latitude", null));
             aed_longitude = Double.parseDouble(sharedPreferences.getString("aed_longitude", null));
