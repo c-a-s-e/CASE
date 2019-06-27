@@ -1,7 +1,10 @@
 package com.example.pc.caseproject
 
 import android.Manifest
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -47,6 +50,14 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
         pauseButton.setOnClickListener { cprButton.stop() }
         cprButton.start()
         text911()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val intentFilter=IntentFilter()
+        intentFilter.addAction("accepted")
+        val receiver:MessageBroadcastReceiver=MessageBroadcastReceiver()
+        registerReceiver(receiver, intentFilter)
     }
 
     override fun onPause() {
@@ -99,5 +110,12 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
             Toast.makeText(applicationContext, "먼저 위치 권한을 확인해주세요", Toast.LENGTH_LONG).show()
             return null
         }
+    }
+
+    inner class MessageBroadcastReceiver:BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            stepView.go(2, true)
+        }
+
     }
 }

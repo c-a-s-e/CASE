@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -27,34 +28,41 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            return; //자기 위치 파악 불가하면 그냥 무시
         Map<String, String> data = remoteMessage.getData();
-        SharedPreferences sharedPreferences = getSharedPreferences("sFile", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("sender-token", data.get("sender-token"));
-        editor.putString("sender_address", data.get("sender_address"));
-        editor.putString("sender_latitude", data.get("sender_latitude"));
-        editor.putString("sender_longitude", data.get("sender_longitude"));
-        editor.putString("date", data.get("date"));
-        editor.putString("aed_address", data.get("aed_address"));
-        editor.putString("aed_latitude", data.get("aed_latitude"));
-        editor.putString("aed_longitude", data.get("aed_longitude"));
+        if( data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken())) return;
+        if (data.get("type").equals("accept")) {
+            Intent intent = new Intent();
+            intent.setAction("accepted");
+            sendBroadcast(intent);
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                return; //자기 위치 파악 불가하면 그냥 무시
+            SharedPreferences sharedPreferences = getSharedPreferences("sFile", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("sender-token", data.get("sender-token"));
+            editor.putString("sender_address", data.get("sender_address"));
+            editor.putString("sender_latitude", data.get("sender_latitude"));
+            editor.putString("sender_longitude", data.get("sender_longitude"));
+            editor.putString("date", data.get("date"));
+            editor.putString("aed_address", data.get("aed_address"));
+            editor.putString("aed_latitude", data.get("aed_latitude"));
+            editor.putString("aed_longitude", data.get("aed_longitude"));
 
 
-        //Receiver 위치 파악
-        LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            //Receiver 위치 파악
+            LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        editor.putString("my_latitude", myLocation.getLatitude() + "");
-        editor.putString("my_longitude", myLocation.getLongitude() + "");
-        editor.apply();
+            editor.putString("my_latitude", myLocation.getLatitude() + "");
+            editor.putString("my_longitude", myLocation.getLongitude() + "");
+            editor.apply();
 
-        //Sender가 본인이 아니고, 위치가 일정 범위 안에 있는 경우
-        if (//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
-                Math.abs(myLocation.getLatitude() - Double.parseDouble(data.get("aed_latitude"))) <= locationRange &&
-                        Math.abs(myLocation.getLongitude() - Double.parseDouble(data.get("aed_longitude"))) <= locationRange)
-            showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요");
+            //Sender가 본인이 아니고, 위치가 일정 범위 안에 있는 경우
+            if (//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
+                    Math.abs(myLocation.getLatitude() - Double.parseDouble(data.get("aed_latitude"))) <= locationRange &&
+                            Math.abs(myLocation.getLongitude() - Double.parseDouble(data.get("aed_longitude"))) <= locationRange)
+                showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요");
+        }
     }
 
     private void showNotification(String title, String message) {
