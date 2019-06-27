@@ -67,6 +67,7 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
             my_latitude =  Double.parseDouble(sharedPreferences.getString("my_latitude", null));
             my_longitude = Double.parseDouble(sharedPreferences.getString("my_longitude", null));
         //}
+        AEDandSOScallUtil.sendAccept(this,sender_token);
 
         Geocoder mGeoCoder = new Geocoder(SOSActivity.this, Locale.KOREA);
         List<Address> address;
