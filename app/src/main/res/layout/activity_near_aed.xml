@@ -37,34 +37,14 @@
         app:layout_constraintTop_toBottomOf="@+id/map">
 
         <ImageView
-            android:id="@+id/aed_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/aed_icon"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:gravity="left"
-            android:text="srgsgsdg"
-            app:layout_constraintBottom_toBottomOf="@id/aed_icon"
-            app:layout_constraintLeft_toRightOf="@id/aed_icon"
-            app:layout_constraintTop_toTopOf="@id/aed_icon" />
-
-        <ImageView
             android:id="@+id/myLocationIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="4dp"
-            android:src="@drawable/aed_icon"
-            app:layout_constraintLeft_toLeftOf="@id/address"
-            app:layout_constraintTop_toBottomOf="@id/aed_icon" />
+            android:layout_marginStart="76dp"
+            android:src="@drawable/mylocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/myAddress"
@@ -82,8 +62,10 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="4dp"
-            android:src="@drawable/aed_icon"
-            app:layout_constraintLeft_toLeftOf="@id/address"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/aedlocation"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/myLocationIcon" />
 
         <TextView

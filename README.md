@@ -1,5 +1,12 @@
-## (CPR - AED - SOS - Emergency)
-> 심장 질환 환자 및 가족들을 위한 응급 처치 도우미 서비스
+## CASE (CPR - AED - SOS - Emergency)
+> 심정지 환자를 위한 응급 처치 도우미 서비스
+
+<div>
+<img src="https://user-images.githubusercontent.com/29904303/60290028-cc920380-9952-11e9-8b74-9f86e9f403cc.png" width="24%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290035-cf8cf400-9952-11e9-96f7-65b603d8c1a2.png" width="24%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290995-e92f3b00-9954-11e9-834e-2ec969290140.png" width="24%"></img>
+<img src="https://user-images.githubusercontent.com/29904303/60290998-eaf8fe80-9954-11e9-90bf-0b5b292ab8e9.png" width="24%"></img>
+</div>
 
 ## Team
 - 조예원, 김태윤, 한승준, 진승혜, 김가영 (2019 OPENHACK, C-A-S-E Team)
@@ -22,7 +29,8 @@
 - 수락을 누를 경우 AED의 위치와 환자의 위치가 지도에 표시됩니다.
 
 **SOS 요청 확인**
-- 미처 확인하지 못했거나 실수로 보지 못한 "SOS 알림 팝업창"을 통해 확인할 수 있습니다. 
+- 미처 확인하지 못했거나 실수로 보지 못한 요청은 "SOS 알림 팝업창"을 통해 확인할 수 있습니다. 
+- SOS 요청 조회는 10분 이내에만 가능합니다.
 
 ## License
 **google map api**

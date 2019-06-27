@@ -101,9 +101,6 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         aedAddress = myRequest.getAedAddress();
         Log.d("위치 ", aedAddress);
 
-        aedTextView = findViewById(R.id.address);
-        aedTextView.setText(aedAddress);
-
         myAddress = findViewById(R.id.myAddress);
         myAddress.setText(nowAddress);
 
@@ -116,11 +113,10 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         aedlatitude = myRequest.aedLatitude;
         aedlongitude = myRequest.aedLongtitude;
 
-        Log.d("?꾩튂", String.valueOf(mylatitude) + " " + String.valueOf(mylongitude));
-
         LatLng now = new LatLng(mylatitude, mylongitude);
         MarkerOptions mymarkerOptions = new MarkerOptions();
         mymarkerOptions.position(now);
+
 
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.mymarker);
         Bitmap bitmap = bitmapdraw.getBitmap();
@@ -129,16 +125,19 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         map.addMarker(mymarkerOptions);
 
 
+
         LatLng aed = new LatLng(aedlatitude, aedlongitude);
         MarkerOptions aedmarkerOptions = new MarkerOptions();
         aedmarkerOptions.position(aed);
 
 
-        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.aedmarker);
+        BitmapDrawable bitmapdraw2 = (BitmapDrawable) getResources().getDrawable(R.drawable.aed);
         Bitmap bitmap2 = bitmapdraw2.getBitmap();
-        Bitmap aedMarker = Bitmap.createScaledBitmap(bitmap2, 104, 148, false);
-        mymarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(aedMarker));
+        Bitmap aedMarker = Bitmap.createScaledBitmap(bitmap2, 88, 80, false);
+        aedmarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(aedMarker));
         map.addMarker(aedmarkerOptions);
+
+
 
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));

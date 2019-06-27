@@ -123,13 +123,13 @@ public class AEDandSOScallUtil {
 
             JSONObject dataObj = new JSONObject();
             dataObj.put("type","accept");
+            dataObj.put("sender-token",FirebaseInstanceId.getInstance().getToken());
             acceptData.put("data",dataObj);
 
             sendData(acceptData, new SendResponseListener() {
                 @Override
                 public void onRequestCompleted() {
-                    Log.d("sendData","onRequestCompleted() 호출됨.");
-                    ////Toast.makeText(context,"요청이 완료되었습니다",Toast.LENGTH_LONG);
+                    Log.d("sendAccept","onRequestCompleted() 호출됨.");
                     //addToDB(); 요청 완료되면 DB에 추가
                 }
 
@@ -140,12 +140,13 @@ public class AEDandSOScallUtil {
 
                 @Override
                 public void onRequestWithError(VolleyError error) {
-                    Log.d("sendData","onRequestWithError() 호출됨.");
+                    Log.d("sendAccept","onRequestWithError() 호출됨.");
                     // Toast.makeText(context,"요청 실패되었습니다",Toast.LENGTH_LONG);
                 }
             },context);
 
         }catch (Exception e){
+            e.printStackTrace();
             Log.d("accept","accept 메시지 보내는 과정에서 문제 발생");
         }
     }
@@ -256,7 +257,7 @@ public class AEDandSOScallUtil {
         };
         request.setShouldCache(false);
         listener.onRequestStarted();
-        if(queue==null) Volley.newRequestQueue(context);
+        if(queue==null) queue = Volley.newRequestQueue(context);
         queue.add(request);
     }
 }
