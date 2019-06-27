@@ -1,13 +1,23 @@
 package com.example.pc.caseproject;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,41 +27,53 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallback {
+public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallback, AEDandSOScallUtil.APIListener {
     double mylatitude, mylongitude, aedlatitude, aedlongitude;
+    private AED_FIND_REQUEST myRequest;
+    private SupportMapFragment mapFragment;
     String aedAddress;
     TextView tv;
+
+    @Override
+    public void update() {
+        mapFragment.getMapAsync(NearAEDActivity.this);
+        aedAddress=myRequest.getAedAddress();
+        Log.d("위치 ", aedAddress);
+        tv=findViewById(R.id.textView);
+        tv.setText(aedAddress);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_aed);
+        showDialog();
 
-        tv=findViewById(R.id.textView);
+        myRequest = new AED_FIND_REQUEST();
+        Location myLocation = findMyLocation();
+        AEDandSOScallUtil.getAEDdataFromAPI(this,myLocation,myRequest,false,true,this);
+
+        mylatitude=myLocation.getLatitude();
+        mylongitude=myLocation.getLongitude();
 
         FragmentManager fm=getSupportFragmentManager();
         SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
-        SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
-        mapFragment.getMapAsync(NearAEDActivity.this);
+        mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
+    }
 
-        Intent intent = getIntent();
-        aedAddress=intent.getStringExtra("aed_address");
-
-        tv.setText(aedAddress);
-
+    private void showDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        LoadingDialogFragment popup = new LoadingDialogFragment();
+        popup.show(getSupportFragmentManager(), "loading");
+        ft.commit();
     }
 
     @Override
     public void onMapReady(final GoogleMap map) {
-
-        Intent intent = getIntent();
-        AED_FIND_REQUEST myRequest = intent.getParcelableExtra("AED_find_request");
-
-        mylatitude=myRequest.myLatitude;
-        mylongitude=myRequest.myLongtitiude;
-
         aedlatitude=myRequest.aedLatitude;
         aedlongitude=myRequest.aedLongtitude;
+
+        Log.d("?꾩튂", String.valueOf(mylatitude)+" "+String.valueOf(mylongitude));
 
         LatLng now = new LatLng(mylatitude, mylongitude);
         MarkerOptions mymarkerOptions = new MarkerOptions();
@@ -77,6 +99,25 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));
+        dismissLoading();
+    }
 
+    private void dismissLoading(){
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("loading");
+        if (prev != null) {
+            LoadingDialogFragment df = (LoadingDialogFragment) prev;
+            df.dismiss();
+        }
+    }
+
+    public Location findMyLocation() {
+        //**gps 기능이 켜졌는지 확인하는 코드가 필요합니다,
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            return myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } else {
+            Toast.makeText(getApplicationContext(), "먼저 위치 권한을 확인해주세요", Toast.LENGTH_LONG).show();
+            return null;
+        }
     }
 }
