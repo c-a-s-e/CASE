@@ -51,10 +51,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if(//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
                     Math.abs(myLocation.getLatitude()-Double.parseDouble(data.get("aed_latitude")))<=locationRange &&
                             Math.abs(myLocation.getLongitude()-Double.parseDouble(data.get("aed_longitude")))<=locationRange)
-                showNotification("주변에서 위급상황 발생",data.get("sender_address")+"에서 위급상황 발생. AED를 가져다주세요",data);
+                showNotification("주변에서 위급상황 발생",data.get("sender_address")+"에서 위급상황 발생. AED를 가져다주세요",data, myLocation);
         }
 
-        private void showNotification(String title, String message, Map<String, String> data) {
+        private void showNotification(String title, String message, Map<String, String> data, Location myLocation) {
             Intent intent = new Intent(this, SOSActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("sender-token",data.get("sender-token"));
@@ -65,6 +65,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent.putExtra("aed_address",data.get("aed_address"));
             intent.putExtra("aed_latitude",data.get("aed_latitude"));
             intent.putExtra("aed_longitude",data.get("aed_longitude"));
+            intent.putExtra("my_latitude",myLocation.getLatitude());
+            intent.putExtra("my_longitude",myLocation.getLongitude());
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                     PendingIntent.FLAG_ONE_SHOT);
 

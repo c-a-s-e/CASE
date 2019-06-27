@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,16 +19,26 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallback {
     double mylatitude, mylongitude, aedlatitude, aedlongitude;
+    String aedAddress;
+    TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_aed);
 
+        tv=findViewById(R.id.textView);
+
         FragmentManager fm=getSupportFragmentManager();
         SupportMapFragment f=(SupportMapFragment)fm.findFragmentById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
         mapFragment.getMapAsync(NearAEDActivity.this);
+
+        Intent intent = getIntent();
+        aedAddress=intent.getStringExtra("aed_address");
+
+        tv.setText(aedAddress);
+
     }
 
     @Override
