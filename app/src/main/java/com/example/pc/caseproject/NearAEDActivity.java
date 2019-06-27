@@ -37,7 +37,6 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     String aedAddress, nowAddress;
     TextView aedTextView, myAddress, aedTextView2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
