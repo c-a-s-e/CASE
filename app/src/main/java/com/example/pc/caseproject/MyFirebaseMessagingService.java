@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -30,6 +31,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         public void onMessageReceived(RemoteMessage remoteMessage) {
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) return; //자기 위치 파악 불가하면 그냥 무시
             Map<String, String> data = remoteMessage.getData();
+            SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("sender-token",data.get("sender-token"));
+            editor.putString("sender_address",data.get("sender_address"));
+            editor.putString("sender_latitude",data.get("sender_latitude"));
+            editor.putString("sender_longitude",data.get("sender_longitude"));
+            editor.putString("date",data.get("date"));
+            editor.putString("aed_address",data.get("aed_address"));
+            editor.putString("aed_latitude",data.get("aed_latitude"));
+            editor.putString("aed_longitude",data.get("aed_longitude"));
+            editor.commit();
 
             //Receiver 위치 파악
             LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

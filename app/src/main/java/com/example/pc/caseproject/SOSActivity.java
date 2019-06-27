@@ -13,6 +13,7 @@ public class SOSActivity extends AppCompatActivity implements EmergencyDialogFra
         setContentView(R.layout.activity_sos);
         showDialog();
     }
+
     private void showDialog() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
