@@ -6,7 +6,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="330dp"
-        android:layout_height="300dp"
+        android:layout_height="275dp"
         android:background="@drawable/dialog_background">
 
         <TextView
@@ -22,26 +22,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.466" />
 
-        <Button
+        <TextView
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/sos_selector"
+            android:layout_margin="20dp"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:gravity="center"
             android:text="거절"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/button2" />
 
-        <Button
+        <TextView
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/sos_selector"
+            android:layout_margin="20dp"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:gravity="center"
             android:text="수락"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/button"
             app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.example.pc.caseproject
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,13 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import butterknife.OnClick
+import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_emergency_dialog.*
 
 class EmergencyDialogFragment : DialogFragment() {
-    lateinit var message:String
-//    lateinit var dialogActionListener: DialogActionListener
+    lateinit var message: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, 0)
@@ -35,31 +32,12 @@ class EmergencyDialogFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        dialog_textview.text=message
-        view?.findViewById<Button>(R.id.button)?.setOnClickListener { dismiss() }
-        view?.findViewById<Button>(R.id.button2)?.setOnClickListener {
+        dialog_textview.text = message
+        view?.findViewById<TextView>(R.id.button)?.setOnClickListener { dismiss() }
+        view?.findViewById<TextView>(R.id.button2)?.setOnClickListener {
             val intent = Intent(context, SOSActivity::class.java)
             startActivity(intent)
+            dismiss()
         }
     }
-
-//    override fun onDismiss(dialog: DialogInterface?) {
-//        super.onDismiss(dialog)
-//        dialogActionListener.onDialogDismiss()
-//    }
-
-//    interface DialogActionListener {
-//        fun onDialogDismiss()
-//    }
-
-//    @OnClick(R.id.button)
-//    fun onDenyButtonClicked(v: View) {
-//        dismiss()
-//    }
-//
-//    @OnClick(R.id.button2)
-//    fun onAcceptButtonClicked(v: View) {
-//        val intent = Intent(context, SOSActivity::class.java)
-//        startActivity(intent)
-//    }
 }
