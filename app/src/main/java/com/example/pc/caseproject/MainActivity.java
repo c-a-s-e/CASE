@@ -10,11 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
 
             Date time = new Date();
             long sec = (time.getTime() - reqdate.getTime()) / 1000;
-            Log.d("lala3", Long.toString(sec));
 
             if (sec < 600) {
                 FragmentManager fm = getSupportFragmentManager();
@@ -206,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                 popup.show(fm, "popup");
                 ft.commit();
             }
+        } else {
+            Toast.makeText(this, "현재 SOS 요청이 없습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }
