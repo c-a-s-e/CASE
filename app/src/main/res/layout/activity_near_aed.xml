@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:gravity="left"
-            android:text="srgsgsdg"
+            android:text="위치를 불러오는 중입니다."
             app:layout_constraintBottom_toBottomOf="@id/myLocationIcon"
             app:layout_constraintLeft_toRightOf="@id/myLocationIcon"
             app:layout_constraintTop_toTopOf="@id/myLocationIcon" />
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:gravity="left"
-            android:text="srgsgsdg"
+            android:text="위치를 불러오는 중입니다"
             app:layout_constraintBottom_toBottomOf="@id/aedLocationIcon"
             app:layout_constraintLeft_toRightOf="@id/aedLocationIcon"
             app:layout_constraintTop_toTopOf="@id/aedLocationIcon" />
