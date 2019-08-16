@@ -1,6 +1,10 @@
 ## CASE (CPR - AED - SOS - Emergency)
 > 심정지 환자를 위한 응급 처치 도우미 서비스
 
+**기능소개 동영상 https://www.youtube.com/watch?v=Ml1anQyLvxg&feature=youtu.be**
+
+**동영상2 https://drive.google.com/open?id=1S1X7MWtXnX-tKTGnF_2J_44MvR2WZEEu**
+
 <div>
 <img src="https://user-images.githubusercontent.com/29904303/60290028-cc920380-9952-11e9-8b74-9f86e9f403cc.png" width="24%"></img>
 <img src="https://user-images.githubusercontent.com/29904303/60290035-cf8cf400-9952-11e9-96f7-65b603d8c1a2.png" width="24%"></img>
@@ -31,6 +35,7 @@
 
 **[ E ] 119 신고 도우미**
 - 흉부압박 버튼을 누르는 동시에 문자를 통해 119에 자동으로 SOS를 요청합니다.
+
 
 ## License
 **google map api**
