@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -33,7 +32,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallback, AEDandSOScallUtil.APIListener {
+public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallback, AEDUtil.APIListener {
     double mylatitude, mylongitude, aedlatitude, aedlongitude;
     private AED_FIND_REQUEST myRequest;
     private SupportMapFragment mapFragment;
@@ -57,7 +56,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         mylatitude = myLocation.getLatitude();
         mylongitude = myLocation.getLongitude();
         myRequest.setMyLatitude(mylatitude);
-        myRequest.setMyLongtitiude(mylongitude);
+        myRequest.setMyLongitude(mylongitude);
 
         Geocoder mGeoCoder = new Geocoder(NearAEDActivity.this, Locale.KOREA);
         List<Address> address;
@@ -66,21 +65,21 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
             if (mGeoCoder != null) {
                 address = mGeoCoder.getFromLocation(mylatitude, mylongitude, 1);
                 if (address != null && address.size() > 0) {
-                    String currentLocationAddress = address.get(0).getAddressLine(0).toString();
-                    nowAddress = currentLocationAddress;
+                    nowAddress = address.get(0).getAddressLine(0);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        AEDandSOScallUtil.getAEDdataFromAPI(this, myLocation, myRequest, false, true, this);
+        AEDUtil.getAEDdataFromAPI(this, myLocation, myRequest, false, true, this);
         mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:{
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
                 Intent intent = new Intent(NearAEDActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -125,7 +124,6 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         map.addMarker(mymarkerOptions);
 
 
-
         LatLng aed = new LatLng(aedlatitude, aedlongitude);
         MarkerOptions aedmarkerOptions = new MarkerOptions();
         aedmarkerOptions.position(aed);
@@ -136,8 +134,6 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
         Bitmap aedMarker = Bitmap.createScaledBitmap(bitmap2, 88, 80, false);
         aedmarkerOptions.icon(BitmapDescriptorFactory.fromBitmap(aedMarker));
         map.addMarker(aedmarkerOptions);
-
-
 
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));

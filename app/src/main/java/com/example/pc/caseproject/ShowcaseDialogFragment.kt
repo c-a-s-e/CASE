@@ -18,6 +18,7 @@ class ShowcaseDialog : DialogFragment() {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.FullScreenDialogStyle)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.activity_tutorial, container, false)
@@ -32,6 +33,6 @@ class ShowcaseDialog : DialogFragment() {
             customView.description.text = context?.resources?.getString(descriptions[position])
             customView
         }
-        skip.setOnClickListener { dismiss()}
+        skip.setOnClickListener { dismiss() }
     }
 }

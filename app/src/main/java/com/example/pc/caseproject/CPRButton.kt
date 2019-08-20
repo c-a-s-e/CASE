@@ -12,20 +12,20 @@ import java.util.concurrent.TimeUnit
 class CPRButton : Button {
     constructor(context: Context) : super(context) {
         compositeDisposable = CompositeDisposable()
-        background=context.resources.getDrawable(R.drawable.cpr_button_selector)
+        background = context.resources.getDrawable(R.drawable.cpr_button_selector)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         compositeDisposable = CompositeDisposable()
-        background=context.resources.getDrawable(R.drawable.cpr_button_selector)
+        background = context.resources.getDrawable(R.drawable.cpr_button_selector)
     }
 
-    lateinit var pulseUpdateListener:PulseUpdateListener
+    lateinit var pulseUpdateListener: PulseUpdateListener
     private var compositeDisposable: CompositeDisposable
-    private val bpm:Long=100
+    private val bpm: Long = 100
     fun start() {
         val pulseDisposable =
-                Observable.interval(0, 60*1000/bpm, TimeUnit.MILLISECONDS)
+                Observable.interval(0, 60 * 1000 / bpm, TimeUnit.MILLISECONDS)
                         .flatMap {
                             return@flatMap Observable.create<Long> { emitter ->
                                 Log.d("IntervalExample", "Create")
@@ -60,8 +60,8 @@ class CPRButton : Button {
         compositeDisposable.dispose()
     }
 
-    interface PulseUpdateListener{
-        fun updateTime(seconds:Long)
+    interface PulseUpdateListener {
+        fun updateTime(seconds: Long)
         fun updatePulse()
     }
 }

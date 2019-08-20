@@ -9,7 +9,7 @@ public class AED_FIND_REQUEST implements Parcelable {
     Double myLatitude, myLongtitiude, aedLatitude, aedLongtitude;
     String aedAddress;
 
-    public AED_FIND_REQUEST(){
+    public AED_FIND_REQUEST() {
 
     }
 
@@ -21,12 +21,12 @@ public class AED_FIND_REQUEST implements Parcelable {
         this.aedAddress = aedAddress;
     }
 
-    public AED_FIND_REQUEST(Parcel in){
+    public AED_FIND_REQUEST(Parcel in) {
         myLatitude = in.readDouble();
-        myLongtitiude=in.readDouble();
-        aedLatitude=in.readDouble();
-        aedLongtitude=in.readDouble();
-        aedAddress=in.readString();
+        myLongtitiude = in.readDouble();
+        aedLatitude = in.readDouble();
+        aedLongtitude = in.readDouble();
+        aedAddress = in.readString();
     }
 
     public static final Creator<AED_FIND_REQUEST> CREATOR = new Creator<AED_FIND_REQUEST>() {
@@ -63,12 +63,12 @@ public class AED_FIND_REQUEST implements Parcelable {
         this.myLatitude = myLatitude;
     }
 
-    public Double getMyLongtitiude() {
+    public Double getMyLongitude() {
         return myLongtitiude;
     }
 
-    public void setMyLongtitiude(Double myLongtitiude) {
-        this.myLongtitiude = myLongtitiude;
+    public void setMyLongitude(Double myLongitude) {
+        this.myLongtitiude = myLongitude;
     }
 
     public Double getAedLatitude() {
@@ -79,12 +79,12 @@ public class AED_FIND_REQUEST implements Parcelable {
         this.aedLatitude = aedLatitude;
     }
 
-    public Double getAedLongtitude() {
+    public Double getAEDLongitude() {
         return aedLongtitude;
     }
 
-    public void setAedLongtitude(Double aedLongtitude) {
-        this.aedLongtitude = aedLongtitude;
+    public void setAEDLongitude(Double abedLongitude) {
+        this.aedLongtitude = abedLongitude;
     }
 
     public String getAedAddress() {

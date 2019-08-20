@@ -41,22 +41,6 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         getActionBar().setTitle("주변 AED 위치");
         showDialog();
 
-
-        /*
-        //푸시 눌렀을 때,
-        Intent intent = getIntent();
-        if(intent != null){
-            sender_address = intent.getStringExtra("sender_address");
-            aed_address = intent.getStringExtra("aed_address");
-            sender_latitude = Double.parseDouble(intent.getStringExtra("sender_latitude"));
-            sender_longitude = Double.parseDouble(intent.getStringExtra("sender_longitude"));
-            aed_latitude = Double.parseDouble(intent.getStringExtra("aed_latitude"));
-            aed_longitude = Double.parseDouble(intent.getStringExtra("aed_longitude"));
-            date=intent.getStringExtra("date");
-            my_latitude=intent.getDoubleExtra("my_latitude", 0);
-            my_longtitude=intent.getDoubleExtra("my_longitude", 0);
-
-        }else{ */
         sender_token = sharedPreferences.getString("sender-token", null);
         sender_address = sharedPreferences.getString("sender_address", null);
         sender_latitude = Double.parseDouble(sharedPreferences.getString("sender_latitude", null));
@@ -67,8 +51,8 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         aed_longitude = Double.parseDouble(sharedPreferences.getString("aed_longitude", null));
         my_latitude = Double.parseDouble(sharedPreferences.getString("my_latitude", null));
         my_longitude = Double.parseDouble(sharedPreferences.getString("my_longitude", null));
-        //}
-        AEDandSOScallUtil.sendAccept(this, sender_token);
+
+        AEDUtil.sendAccept(this, sender_token);
 
         Geocoder mGeoCoder = new Geocoder(SOSActivity.this, Locale.KOREA);
         List<Address> address;
