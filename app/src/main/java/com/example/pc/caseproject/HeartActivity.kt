@@ -30,7 +30,7 @@ import java.io.File
 import java.io.FileWriter
 
 
-class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDandSOScallUtil.APIListener, SensorEventListener {
+class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUtil.APIListener, SensorEventListener {
 
     private lateinit var myRequest: AED_FIND_REQUEST
 
@@ -60,9 +60,9 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDand
 
         myRequest = AED_FIND_REQUEST()
         val myLocation = findMyLocation()
-        myRequest.setMyLatitude(myLocation?.latitude)
-        myRequest.setMyLongtitiude(myLocation?.longitude)
-        AEDandSOScallUtil.getAEDdataFromAPI(this, myLocation!!, myRequest, false, true, this)
+        myRequest.myLatitude = myLocation?.latitude
+        myRequest.myLongitude = myLocation?.longitude
+        AEDUtil.getAEDdataFromAPI(this, myLocation!!, myRequest, false, true, this)
 
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false

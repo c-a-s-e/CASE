@@ -110,7 +110,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(final GoogleMap map) {
         aedlatitude = myRequest.aedLatitude;
-        aedlongitude = myRequest.aedLongtitude;
+        aedlongitude = myRequest.aedLongitude;
 
         LatLng now = new LatLng(mylatitude, mylongitude);
         MarkerOptions mymarkerOptions = new MarkerOptions();

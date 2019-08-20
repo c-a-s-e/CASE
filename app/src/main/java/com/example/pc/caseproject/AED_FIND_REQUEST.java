@@ -6,26 +6,26 @@ import android.os.Parcelable;
 //주변 AED 찾는 액티비티로 넘어갈 때 이 정보를 넘겨드립니다.
 
 public class AED_FIND_REQUEST implements Parcelable {
-    Double myLatitude, myLongtitiude, aedLatitude, aedLongtitude;
+    Double myLatitude, myLongitude, aedLatitude, aedLongitude;
     String aedAddress;
 
     public AED_FIND_REQUEST() {
 
     }
 
-    public AED_FIND_REQUEST(Double myLatitude, Double myLongtitiude, Double aedLatitude, Double aedLongtitude, String aedAddress) {
+    public AED_FIND_REQUEST(Double myLatitude, Double myLongitude, Double aedLatitude, Double aedLongitude, String aedAddress) {
         this.myLatitude = myLatitude;
-        this.myLongtitiude = myLongtitiude;
+        this.myLongitude = myLongitude;
         this.aedLatitude = aedLatitude;
-        this.aedLongtitude = aedLongtitude;
+        this.aedLongitude = aedLongitude;
         this.aedAddress = aedAddress;
     }
 
     public AED_FIND_REQUEST(Parcel in) {
         myLatitude = in.readDouble();
-        myLongtitiude = in.readDouble();
+        myLongitude = in.readDouble();
         aedLatitude = in.readDouble();
-        aedLongtitude = in.readDouble();
+        aedLongitude = in.readDouble();
         aedAddress = in.readString();
     }
 
@@ -49,9 +49,9 @@ public class AED_FIND_REQUEST implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeDouble(myLatitude);
-        parcel.writeDouble(myLongtitiude);
+        parcel.writeDouble(myLongitude);
         parcel.writeDouble(aedLatitude);
-        parcel.writeDouble(aedLongtitude);
+        parcel.writeDouble(aedLongitude);
         parcel.writeString(aedAddress);
     }
 
@@ -64,11 +64,11 @@ public class AED_FIND_REQUEST implements Parcelable {
     }
 
     public Double getMyLongitude() {
-        return myLongtitiude;
+        return myLongitude;
     }
 
     public void setMyLongitude(Double myLongitude) {
-        this.myLongtitiude = myLongitude;
+        this.myLongitude = myLongitude;
     }
 
     public Double getAedLatitude() {
@@ -80,11 +80,11 @@ public class AED_FIND_REQUEST implements Parcelable {
     }
 
     public Double getAEDLongitude() {
-        return aedLongtitude;
+        return aedLongitude;
     }
 
     public void setAEDLongitude(Double abedLongitude) {
-        this.aedLongtitude = abedLongitude;
+        this.aedLongitude = abedLongitude;
     }
 
     public String getAedAddress() {
