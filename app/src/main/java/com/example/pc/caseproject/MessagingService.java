@@ -59,9 +59,9 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
             editor.apply();
 
             //Sender가 본인이 아니고, 위치가 일정 범위 안에 있는 경우
-            if (//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
-                    Math.abs(myLocation.getLatitude() - Double.parseDouble(data.get("aed_latitude"))) <= locationRange &&
-                            Math.abs(myLocation.getLongitude() - Double.parseDouble(data.get("aed_longitude"))) <= locationRange)
+//            if (//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
+//                    Math.abs(myLocation.getLatitude() - Double.parseDouble(data.get("aed_latitude"))) <= locationRange &&
+//                            Math.abs(myLocation.getLongitude() - Double.parseDouble(data.get("aed_longitude"))) <= locationRange)
                 showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요");
         }
     }
