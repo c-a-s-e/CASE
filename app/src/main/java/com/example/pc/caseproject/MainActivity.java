@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.SEND_SMS};
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
     EmergencyDialogFragment popup;
     ShowcaseDialog showcase;
 
