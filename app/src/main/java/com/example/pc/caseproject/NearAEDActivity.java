@@ -37,7 +37,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     private AED_FIND_REQUEST myRequest;
     private SupportMapFragment mapFragment;
     String aedAddress, nowAddress;
-    TextView aedTextView, myAddress, aedTextView2;
+    TextView myAddress, aedTextView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
 
-        AEDUtil.getAEDdataFromAPI(this, myLocation, myRequest, false, true, this);
+        AEDUtil.getAEDData(this, myLocation, myRequest, this, false);
         mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
     }
 
@@ -137,10 +137,10 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
 
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(now, 15));
+
     }
 
     public Location findMyLocation() {
-        //**gps 기능이 켜졌는지 확인하는 코드가 필요합니다,
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             return myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);

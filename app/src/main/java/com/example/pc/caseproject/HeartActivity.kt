@@ -62,7 +62,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         val myLocation = findMyLocation()
         myRequest.myLatitude = myLocation?.latitude
         myRequest.myLongitude = myLocation?.longitude
-        AEDUtil.getAEDdataFromAPI(this, myLocation!!, myRequest, false, true, this)
+        AEDUtil.getAEDData(this, myLocation!!, myRequest, this, true)
 
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
@@ -154,7 +154,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
                         { Log.d("measurement", it.toString()) },
                         { error -> Log.e("csv", error.message) },
                         {
-                            Log.e("csv", "complete")
                             fileWriter.close()
                         }
                 )
