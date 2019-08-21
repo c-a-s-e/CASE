@@ -38,15 +38,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class AEDUtil {
     private static RequestQueue queue;
     public static APIListener myListener;
+    private final static String []aed_info_name =
+            {"sido", "gugun", "buildAddress", "org", "buildPlace", "wgs84Lon", "wgs84Lat", "distance"};
 
     public interface APIListener {
         void update();
     }
 
-    public static void getAEDdataFromAPI(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request,
-                                         final boolean isSendPush, final boolean isNewActivity, final APIListener myListener) {
+    public static void getAEDData(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request, final APIListener myListener, final boolean sos) {
         AEDUtil.myListener = myListener;
-        //AED API로 콜해서 넣어서 보내기...
         String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
                 + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
                 + "&WGS84_LON=" + myLocation.getLongitude() + "&WGS84_LAT=" + myLocation.getLatitude() + "&pageNum=1&numOfRows=1";
@@ -66,44 +66,49 @@ public class AEDUtil {
                             Document document = documentBuilder.parse(is);
 
                             Element root = document.getDocumentElement();
-                            NodeList myNL = root.getChildNodes(); //헤더랑 바디
-                            Element body = (Element) myNL.item(1);
-                            myNL = (body).getChildNodes();
-                            Element items = (Element) myNL.item(0);
-                            myNL = items.getChildNodes();
-                            Element item = (Element) myNL.item(0);
-                            myNL = item.getChildNodes();
+                            NodeList nl = root.getChildNodes();
+                            Element body = (Element) nl.item(1);
+                            nl = body.getChildNodes();
+                            Element items = (Element)nl.item(0);
+                            nl = items.getChildNodes();
+                            Element item = (Element)nl.item(0);
+                            nl =item.getChildNodes();
 
-                            aed_find_request.setAedAddress(myNL.item(12).getTextContent() + " " +
-                                    myNL.item(5).getTextContent() + " " + myNL.item(0).getTextContent()
-                                    + " " + myNL.item(10).getTextContent() + " " + myNL.item(1).getTextContent());
+                            String []AED_data = new String[8];
+                            for (int i=0; i<nl.getLength(); i++){
+                                Element data = (Element)nl.item(i);
+                                String dataName = data.getNodeName();
+                                for(int j=0; j<aed_info_name.length; j++){
+                                    if (dataName.equals(aed_info_name[j])){
+                                        AED_data[j]=data.getTextContent();
+                                        break;
+                                    }
+                                }
+                            }
 
-                            aed_find_request.setAedLatitude(Double.parseDouble(myNL.item(13).getTextContent()));
-                            aed_find_request.setAEDLongitude(Double.parseDouble(myNL.item(14).getTextContent()));
+                            //주소는 sido + gugun + buildAddress + org + buildPlace
+                            String aed_address = "";
+                            for(int i=0;i<5;i++) {
+                                if (AED_data[i]==null) continue;
+                                aed_address+=(AED_data[i]+" ");
+                            }
+                            aed_find_request.setAedAddress(aed_address);
+
+                            aed_find_request.setAEDLongitude(Double.parseDouble(AED_data[5]));
+                            aed_find_request.setAedLatitude(Double.parseDouble(AED_data[6]));
 
                             myListener.update();
-
-                            //push 콜 보내기
-                            requestPush(context, aed_find_request);
-
-                            /*
-                            if(isNewActivity) {
-                                Intent intent = new Intent(context, NearAEDActivity.class);
-                                intent.putExtra("AED_find_request", aed_find_request);
-                                requestPush(context,aed_find_request);
-                                ((Activity)context).startActivity(intent);
-                            }
-                            */
+                            if (sos==true) requestPush(context, aed_find_request);
 
                         } catch (Exception e1) {
                             e1.printStackTrace();
-                            Log.d("parsing", "파싱 중 예외 발생" + e1.getMessage());
+                            Log.d("aed_api", "data parsing 실패" + e1.getMessage());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("aed 정보", "aed 정보 받아오는 중 오류 발생" + error.getMessage());
+                Log.d("aed_api", "aed 정보 받아오기 실패" + error.getMessage());
             }
         });
         stringRequest.setRetryPolicy
@@ -123,7 +128,7 @@ public class AEDUtil {
             dataObj.put("sender-token", FirebaseInstanceId.getInstance().getToken());
             acceptData.put("data", dataObj);
 
-            sendData(acceptData, new SendResponseListener() {
+            sendSOS(acceptData, new SendResponseListener() {
                 @Override
                 public void onRequestCompleted() {
                     Log.d("sendAccept", "onRequestCompleted() 호출됨.");
@@ -132,7 +137,7 @@ public class AEDUtil {
 
                 @Override
                 public void onRequestStarted() {
-                    //Log.d("sendData","onRequestStarted() 호출됨.");
+                    //Log.d("sendSOS","onRequestStarted() 호출됨.");
                 }
 
                 @Override
@@ -187,22 +192,22 @@ public class AEDUtil {
             Toast.makeText(context, e.getMessage() + "send 실패", Toast.LENGTH_LONG).show();
         }
 
-        sendData(requestData, new SendResponseListener() {
+        sendSOS(requestData, new SendResponseListener() {
             @Override
             public void onRequestCompleted() {
-                Log.d("sendData", "onRequestCompleted() 호출됨.");
+                Log.d("sendSOS", "onRequestCompleted() 호출됨.");
                 ////Toast.makeText(context,"요청이 완료되었습니다",Toast.LENGTH_LONG);
                 //addToDB(); 요청 완료되면 DB에 추가
             }
 
             @Override
             public void onRequestStarted() {
-                //Log.d("sendData","onRequestStarted() 호출됨.");
+                //Log.d("sendSOS","onRequestStarted() 호출됨.");
             }
 
             @Override
             public void onRequestWithError(VolleyError error) {
-                Log.d("sendData", "onRequestWithError() 호출됨.");
+                Log.d("sendSOS", "onRequestWithError() 호출됨.");
                 // Toast.makeText(context,"요청 실패되었습니다",Toast.LENGTH_LONG);
             }
         }, context);
@@ -216,7 +221,7 @@ public class AEDUtil {
         void onRequestWithError(VolleyError error);
     }
 
-    public static void sendData(JSONObject requestData, final SendResponseListener listener, Context context) {
+    public static void sendSOS(JSONObject requestData, final SendResponseListener listener, Context context) {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 "https://fcm.googleapis.com/fcm/send",
