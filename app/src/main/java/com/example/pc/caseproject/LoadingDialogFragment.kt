@@ -12,6 +12,7 @@ import android.view.Window
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_loading_dialog.*
 import java.util.concurrent.TimeUnit
 
 class LoadingDialogFragment : DialogFragment() {
@@ -22,18 +23,16 @@ class LoadingDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_loading_dialog, container, false)
-        view?.let {
-            dialog.window?.let {
-                it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                it.requestFeature(Window.FEATURE_NO_TITLE)
-            }
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            requestFeature(Window.FEATURE_NO_TITLE)
         }
         return view
     }
 
     override fun onResume() {
         super.onResume()
-        view?.findViewById<PulseLoadingView>(R.id.loader)?.startAnimation()
+        loader.startAnimation()
         Observable.create<String> { emitter ->
             emitter.onNext("MindOrks")
             emitter.onComplete()

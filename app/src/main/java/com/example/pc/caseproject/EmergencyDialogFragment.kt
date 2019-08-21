@@ -21,11 +21,9 @@ class EmergencyDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_emergency_dialog, container, false)
-        view?.let {
-            dialog.window?.let {
-                it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                it.requestFeature(Window.FEATURE_NO_TITLE)
-            }
+        dialog.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            requestFeature(Window.FEATURE_NO_TITLE)
         }
         return view
     }
@@ -33,8 +31,8 @@ class EmergencyDialogFragment : DialogFragment() {
     override fun onResume() {
         super.onResume()
         dialog_textview.text = message
-        view?.findViewById<TextView>(R.id.button)?.setOnClickListener { dismiss() }
-        view?.findViewById<TextView>(R.id.button2)?.setOnClickListener {
+        button.setOnClickListener { dismiss() }
+        button2.setOnClickListener {
             val intent = Intent(context, SOSActivity::class.java)
             startActivity(intent)
             dismiss()
