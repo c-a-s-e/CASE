@@ -13,6 +13,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"

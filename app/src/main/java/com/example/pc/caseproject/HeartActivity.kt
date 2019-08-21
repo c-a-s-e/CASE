@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -21,6 +22,9 @@ import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toolbar
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -28,9 +32,10 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_heart.*
 import java.io.File
 import java.io.FileWriter
+import com.example.pc.caseproject.FeedbackUtil.Measurement
 
 
-class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUtil.APIListener, SensorEventListener {
+class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUtil.APIListener, SensorEventListener, FeedbackUtil.FeedbackListener {
 
     private lateinit var myRequest: AED_FIND_REQUEST
 
@@ -43,10 +48,11 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     private val accelerometer: Sensor? by lazy { sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) }
 
     private val interval = 10
+    private var measurementIndex = 0
     private var lastTime: Long = -1
     private var collectData = false
-    private val measurements = mutableListOf<Measurement>()
     private val compositeDisposable by lazy { CompositeDisposable() }
+    private val feedbackUtil by lazy { FeedbackUtil() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +89,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         receiver = MessageBroadcastReceiver()
         registerReceiver(receiver, intentFilter)
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
+        feedbackUtil.feedbackListener = this
     }
 
     override fun onPause() {
@@ -132,9 +139,10 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
                     val zAccel = values[2]
                     val currentTime = System.currentTimeMillis()
                     if (currentTime - lastTime > interval) {
-                        Log.e("accel", zAccel.toString())
-                        measurements.add(Measurement(currentTime, zAccel))
+                        val measurement = Measurement(measurementIndex, currentTime, zAccel.toDouble())
+                        feedbackUtil.pushMeasurement(measurement)
                         lastTime = currentTime
+                        measurementIndex++
                     }
                 }
             }
@@ -144,7 +152,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     private fun saveMeasurements() {
         val folder = Environment.getExternalStorageDirectory().absolutePath
         val fileWriter = FileWriter(File(folder, "data.csv"))
-        val saveDisposable = Observable.fromIterable(measurements)
+        val saveDisposable = Observable.fromIterable(feedbackUtil.smoothMeasurements.toMutableList())
                 .map {
                     fileWriter.write(it.toString())
                 }
@@ -158,6 +166,21 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
                         }
                 )
         compositeDisposable.add(saveDisposable)
+    }
+
+    override fun onDrawChart(data: MutableList<Measurement>) {
+        runOnUiThread {
+            val entries = mutableListOf<Entry>()
+            data.forEach { entries.add(Entry((it.time - 1566398100000).toFloat(), it.value.toFloat())) }
+            val dataSet = LineDataSet(entries, "data")
+            dataSet.color = Color.RED
+            chart.data = LineData(dataSet)
+            chart.invalidate()
+        }
+    }
+
+    override fun onFeedbackResult() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun text911() {
@@ -187,15 +210,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     inner class MessageBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             stepView.go(2, true)
-        }
-    }
-
-    data class Measurement(
-            val time: Long,
-            val value: Float
-    ) {
-        override fun toString(): String {
-            return "$time, $value\n"
         }
     }
 }
