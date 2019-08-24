@@ -16,8 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NavigationActivity"></activity>
-        <activity android:name=".SOSActivity" />
+        <activity android:name=".ProviderActivity"/>
+        <activity android:name=".NavigationActivity" />
+        <activity android:name=".FindAEDActivity" />
         <activity android:name=".NearAEDActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

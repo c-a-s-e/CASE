@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -37,40 +36,31 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
         } else {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                 return; //자기 위치 파악 불가하면 그냥 무시
-            SharedPreferences sharedPreferences = getSharedPreferences("sFile", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("sender-token", data.get("sender-token"));
-            editor.putString("sender_address", data.get("sender_address"));
-            editor.putString("sender_latitude", data.get("sender_latitude"));
-            editor.putString("sender_longitude", data.get("sender_longitude"));
-            editor.putString("date", data.get("date"));
-            editor.putString("aed_address", data.get("aed_address"));
-            editor.putString("aed_latitude", data.get("aed_latitude"));
-            editor.putString("aed_longitude", data.get("aed_longitude"));
-
+            Intent intent = new Intent(this, ProviderActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("sender-token", data.get("sender-token"));
+            intent.putExtra("sender_address", data.get("sender_address"));
+            intent.putExtra("sender_latitude", data.get("sender_latitude"));
+            intent.putExtra("sender_longitude", data.get("sender_longitude"));
+            intent.putExtra("date", data.get("date"));
+            intent.putExtra("aed_address", data.get("a[ed_address"));
+            intent.putExtra("aed_latitude", data.get("aed_latitude"));
+            intent.putExtra("aed_longitude", data.get("aed_longitude"));
+            Log.e("msg", data.get("aed_latitude")+"");
 
             //Receiver 위치 파악
             LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-            editor.putString("my_latitude", myLocation.getLatitude() + "");
-            editor.putString("my_longitude", myLocation.getLongitude() + "");
-            editor.apply();
+            intent.putExtra("my_latitude", myLocation.getLatitude());
+            intent.putExtra("my_longitude", myLocation.getLongitude());
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-            //Sender가 본인이 아니고, 위치가 일정 범위 안에 있는 경우
-//            if (//!data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()) &&
-//                    Math.abs(myLocation.getLatitude() - Double.parseDouble(data.get("aed_latitude"))) <= locationRange &&
-//                            Math.abs(myLocation.getLongitude() - Double.parseDouble(data.get("aed_longitude"))) <= locationRange)
-                showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요");
+            showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요", pendingIntent);
         }
     }
 
-    private void showNotification(String title, String message) {
-        Intent intent = new Intent(this, SOSActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
+    private void showNotification(String title, String message, PendingIntent pendingIntent) {
         String channelId = "aed_alarm_channel_id";
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
