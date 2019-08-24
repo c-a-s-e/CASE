@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pc.caseproject">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -16,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NavigationActivity"></activity>
+        <activity android:name=".NavigationActivity" />
+
         <activity android:name=".SOSActivity" />
         <activity android:name=".NearAEDActivity" />
         <activity android:name=".MainActivity">
@@ -33,6 +29,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pc.caseproject.MainActivity" />
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc" />
+
+<!--        <receiver-->
+<!--            android:name=".CallReceiver"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.PHONE_STATE" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
         <service
             android:name=".MessagingService"
@@ -41,10 +49,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 </manifest>

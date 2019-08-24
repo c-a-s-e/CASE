@@ -40,6 +40,7 @@ public class AEDUtil {
     public static APIListener myListener;
     private final static String []aed_info_name =
             {"sido", "gugun", "buildAddress", "org", "buildPlace", "wgs84Lon", "wgs84Lat", "distance"};
+    public static String PHONE_NUM;
 
     public interface APIListener {
         void update();

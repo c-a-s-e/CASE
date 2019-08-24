@@ -1,7 +1,9 @@
 package com.example.pc.caseproject;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,6 +12,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telecom.TelecomManager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallReceiver.CallListener {
     @BindView(R.id.cprButton)
     CPRButton cprButton;
     @BindView(R.id.aedButton)
@@ -37,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.SEND_SMS};
+            Manifest.permission.SEND_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS};
     EmergencyDialogFragment popup;
     ShowcaseDialog showcase;
+    Boolean call=false;
+    CallReceiver callReceiver=new CallReceiver();
 
     @Override
     protected void onResume() {
@@ -47,17 +54,29 @@ public class MainActivity extends AppCompatActivity {
         openTutorial();
         super.onResume();
     }
-
+    public static MainActivity instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        instance =this;
         FirebaseMessaging.getInstance().subscribeToTopic("all");
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         requestAllPermissions();
         openTutorial();
+        phoneNumber();
+callReceiver.listener=this;
+        IntentFilter intentFilter = new IntentFilter("android.intent.action.PHONE_STATE");
+        registerReceiver(callReceiver, intentFilter);
+
+        if(call==true){
+            autoAnswer();
+        }else{
+            Log.d("callBoolean", "false");
+        }
+        Log.d("dddddddd", "ㅈㅁㄷㄱㄹㄴ홍수ㅡㅓ");
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
@@ -208,5 +227,41 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "현재 SOS 요청이 없습니다.", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void phoneNumber(){
+        TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        String pn;
+        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+            return;
+        }
+        pn = tm.getLine1Number();
+        Log.d("myNumber", pn);
+        if(pn.startsWith("+82")){
+            pn = pn.replace("+82", "0");
+            AEDUtil.PHONE_NUM=pn;
+        }
+
+    }
+
+
+    public void autoAnswer(){
+        TelecomManager telecomManager = (TelecomManager) this.getSystemService(Context.TELECOM_SERVICE);
+        if (checkSelfPermission(Manifest.permission.ANSWER_PHONE_CALLS) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        telecomManager.acceptRingingCall();
+
+//        Bundle extras = getIntent().getExtras();
+//        if(extras!=null){
+//            call=(extras.getBoolean("call"));
+//            Log.d("callBoolean", String.valueOf(call));
+//        }
+
+
+    }
+
+    @Override
+    public void onCallReceived() {
+        autoAnswer();
     }
 }
