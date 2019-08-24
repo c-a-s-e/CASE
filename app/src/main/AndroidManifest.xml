@@ -12,11 +12,11 @@
         android:allowBackup="true"
         android:icon="@drawable/mainicon"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".NavigationActivity"></activity>
         <activity android:name=".SOSActivity" />
         <activity android:name=".NearAEDActivity" />
         <activity android:name=".MainActivity">
@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HeartActivity"
+        <activity
+            android:name=".HeartActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
