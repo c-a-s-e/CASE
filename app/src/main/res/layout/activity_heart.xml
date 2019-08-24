@@ -33,8 +33,16 @@
             android:id="@+id/cprButton"
             android:layout_width="@dimen/cpr_button_size"
             android:layout_height="@dimen/cpr_button_size"
-            android:textColor="#666666"
-            android:textSize="100sp" />
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="90sp" />
+
+        <ImageView
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:id="@+id/pulseView"
+            android:layout_centerInParent="true"
+            android:background="@drawable/cpr_button_pulse"/>
 
         <TextView
             android:id="@+id/count"
@@ -44,7 +52,7 @@
             android:layout_marginTop="190dp"
             android:elevation="10dp"
             android:text="압박 횟수"
-            android:textColor="#666666"
+            android:textColor="@color/white"
             android:textSize="15sp" />
     </RelativeLayout>
 
@@ -61,8 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AED 3분후 도착"
-        app:layout_constraintBottom_toTopOf="@id/helpLocation"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/helpLocation"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chestImage" />
 
@@ -73,7 +81,7 @@
         android:text="구조요원 5분후 도착"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aedLocation" />
+        app:layout_constraintRight_toLeftOf="@id/aedLocation"
+        app:layout_constraintTop_toBottomOf="@id/chestImage" />
 
 </android.support.constraint.ConstraintLayout>
