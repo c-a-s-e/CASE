@@ -78,7 +78,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         onBackPressed()
         return true
     }
-
+    
     override fun update() {
         stepView.go(1, true)
     }
