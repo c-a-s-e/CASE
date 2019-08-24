@@ -16,9 +16,11 @@ import android.os.Vibrator
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.telephony.SmsManager
+import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import android.widget.Toolbar
+import android.support.v7.widget.Toolbar
 import kotlinx.android.synthetic.main.activity_heart.*
 
 
@@ -34,10 +36,10 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_heart)
-        setActionBar(toolbar as? Toolbar)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.setDisplayShowHomeEnabled(true)
-        actionBar?.title = "흉부 압박"
+        setSupportActionBar(toolbar as? Toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = "흉부 압박"
         mediaPlayer = MediaPlayer.create(this, R.raw.beep)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -119,6 +121,15 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     inner class MessageBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             stepView.go(2, true)
+        }
+    }
+
+    data class Measurement(
+            val time: Long,
+            val value: Float
+    ) {
+        override fun toString(): String {
+            return "$time, $value\n"
         }
     }
 }
