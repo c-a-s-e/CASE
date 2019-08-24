@@ -13,29 +13,100 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/accept"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        android:id="@+id/rightGuide"
+        app:layout_constraintGuide_end="16dp"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/leftGuide"
+        app:layout_constraintGuide_begin="16dp"
+        android:orientation="vertical"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Emergency!!"
+        android:textSize="24sp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Please bring an AED!!"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text1"/>
+
+    <ImageView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/leftGuide"
+        app:layout_constraintRight_toRightOf="@id/rightGuide"
+        app:layout_constraintBottom_toTopOf="@id/nearest"
+        app:layout_constraintTop_toBottomOf="@+id/text2" />
+
+    <TextView
+        android:id="@+id/nearest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nearest AED"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/leftGuide"
+        app:layout_constraintTop_toBottomOf="@id/location"/>
+
+    <TextView
+        android:id="@+id/building"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QQ Building 3F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/leftGuide"
+        app:layout_constraintTop_toBottomOf="@id/nearest"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:text="50m, 5min by walk"
+        android:textSize="16sp"
+        android:id="@+id/walk"
+        app:layout_constraintLeft_toLeftOf="@id/leftGuide"
+        app:layout_constraintTop_toBottomOf="@id/building"/>
 
     <Button
         android:id="@+id/accept"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="제가 갈게요"
+        android:text="I will!"
+        android:layout_margin="16dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/otherAED"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/map" />
+        app:layout_constraintLeft_toLeftOf="@id/leftGuide"
+        app:layout_constraintRight_toRightOf="@id/rightGuide"
+        app:layout_constraintTop_toBottomOf="@id/walk" />
 
     <TextView
         android:id="@+id/otherAED"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="다른 AED 위치 보기"
+        android:text="Find another AED"
+        android:textColor="@color/colorAccent"
+        android:layout_margin="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
