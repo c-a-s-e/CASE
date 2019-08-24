@@ -24,7 +24,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 public class MessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    private final double locationRange = 0.5; //AED를 주변으로 이 범위 안에 있을 때만 푸시 발생
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -69,18 +68,6 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
     private void showNotification(String title, String message) {
         Intent intent = new Intent(this, SOSActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            /*
-            intent.putExtra("sender-token",data.get("sender-token"));
-            intent.putExtra("sender_address",data.get("sender_address"));
-            intent.putExtra("sender_latitude",data.get("sender_latitude"));
-            intent.putExtra("sender_longitude",data.get("sender_longitude"));
-            intent.putExtra("date",data.get("date"));
-            intent.putExtra("aed_address",data.get("aed_address"));
-            intent.putExtra("aed_latitude",data.get("aed_latitude"));
-            intent.putExtra("aed_longitude",data.get("aed_longitude"));
-            intent.putExtra("my_latitude",myLocation.getLatitude());
-            intent.putExtra("my_longitude",myLocation.getLongitude());
-            */
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

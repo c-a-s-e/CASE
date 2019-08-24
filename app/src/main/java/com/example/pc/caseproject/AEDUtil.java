@@ -46,75 +46,81 @@ public class AEDUtil {
     }
 
     public static void getAEDData(final Context context, final Location myLocation, final AED_FIND_REQUEST aed_find_request, final APIListener myListener, final boolean sos) {
-        AEDUtil.myListener = myListener;
-        String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
-                + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
-                + "&WGS84_LON=" + myLocation.getLongitude() + "&WGS84_LAT=" + myLocation.getLatitude() + "&pageNum=1&numOfRows=1";
+//        AEDUtil.myListener = myListener;
+//        String url = "http://apis.data.go.kr/B552657/AEDInfoInqireService/getAedLcinfoInqire?"
+//                + "ServiceKey=h81QdjEyCaCY33uMnxkCku8XkhtY%2FZcgPxudUDzFlE7YCC%2BcUTm%2F1gBnVx9oz44IPUyteI8akUb8gQIuEwhbqg%3D%3D"
+//                + "&WGS84_LON=" + myLocation.getLongitude() + "&WGS84_LAT=" + myLocation.getLatitude() + "&pageNum=1&numOfRows=1";
+//
+//        queue = Volley.newRequestQueue(context);
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            response = new String(response.getBytes("ISO-8859-1"), "utf-8");
+//                            //((TextView)findViewById(R.id.textView)).setText(response);
+//
+//                            InputSource is = new InputSource(new StringReader(response));
+//                            DocumentBuilderFactory myFactory = DocumentBuilderFactory.newInstance();
+//                            DocumentBuilder documentBuilder = myFactory.newDocumentBuilder();
+//                            Document document = documentBuilder.parse(is);
+//
+//                            Element root = document.getDocumentElement();
+//                            NodeList nl = root.getChildNodes();
+//                            Element body = (Element) nl.item(1);
+//                            nl = body.getChildNodes();
+//                            Element items = (Element)nl.item(0);
+//                            nl = items.getChildNodes();
+//                            Element item = (Element)nl.item(0);
+//                            nl =item.getChildNodes();
+//
+//                            String []AED_data = new String[8];
+//                            for (int i=0; i<nl.getLength(); i++){
+//                                Element data = (Element)nl.item(i);
+//                                String dataName = data.getNodeName();
+//                                for(int j=0; j<aed_info_name.length; j++){
+//                                    if (dataName.equals(aed_info_name[j])){
+//                                        AED_data[j]=data.getTextContent();
+//                                        break;
+//                                    }
+//                                }
+//                            }
+//
+//                            //주소는 sido + gugun + buildAddress + org + buildPlace
+//                            String aed_address = "";
+//                            for(int i=0;i<5;i++) {
+//                                if (AED_data[i]==null) continue;
+//                                aed_address+=(AED_data[i]+" ");
+//                            }
+//                            aed_find_request.setAedAddress(aed_address);
+//
+//                            aed_find_request.setAEDLongitude(Double.parseDouble(AED_data[5]));
+//                            aed_find_request.setAedLatitude(Double.parseDouble(AED_data[6]));
+//
+//                            myListener.update();
+//                            if (sos==true) requestPush(context, aed_find_request);
+//
+//                        } catch (Exception e1) {
+//                            e1.printStackTrace();
+//                            Log.d("aed_api", "data parsing 실패" + e1.getMessage());
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("aed_api", "aed 정보 받아오기 실패" + error.getMessage());
+//            }
+//        });
+//        stringRequest.setRetryPolicy
+//                (new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
+//                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        queue.add(stringRequest);
+        aed_find_request.setAedAddress("Fuming Residential District Fuming Homeland Community Service Station");
+        aed_find_request.setAEDLongitude(121.5987163);
+        aed_find_request.setAedLatitude(29.87487);
 
-        queue = Volley.newRequestQueue(context);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            response = new String(response.getBytes("ISO-8859-1"), "utf-8");
-                            //((TextView)findViewById(R.id.textView)).setText(response);
-
-                            InputSource is = new InputSource(new StringReader(response));
-                            DocumentBuilderFactory myFactory = DocumentBuilderFactory.newInstance();
-                            DocumentBuilder documentBuilder = myFactory.newDocumentBuilder();
-                            Document document = documentBuilder.parse(is);
-
-                            Element root = document.getDocumentElement();
-                            NodeList nl = root.getChildNodes();
-                            Element body = (Element) nl.item(1);
-                            nl = body.getChildNodes();
-                            Element items = (Element)nl.item(0);
-                            nl = items.getChildNodes();
-                            Element item = (Element)nl.item(0);
-                            nl =item.getChildNodes();
-
-                            String []AED_data = new String[8];
-                            for (int i=0; i<nl.getLength(); i++){
-                                Element data = (Element)nl.item(i);
-                                String dataName = data.getNodeName();
-                                for(int j=0; j<aed_info_name.length; j++){
-                                    if (dataName.equals(aed_info_name[j])){
-                                        AED_data[j]=data.getTextContent();
-                                        break;
-                                    }
-                                }
-                            }
-
-                            //주소는 sido + gugun + buildAddress + org + buildPlace
-                            String aed_address = "";
-                            for(int i=0;i<5;i++) {
-                                if (AED_data[i]==null) continue;
-                                aed_address+=(AED_data[i]+" ");
-                            }
-                            aed_find_request.setAedAddress(aed_address);
-
-                            aed_find_request.setAEDLongitude(Double.parseDouble(AED_data[5]));
-                            aed_find_request.setAedLatitude(Double.parseDouble(AED_data[6]));
-
-                            myListener.update();
-                            if (sos==true) requestPush(context, aed_find_request);
-
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                            Log.d("aed_api", "data parsing 실패" + e1.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("aed_api", "aed 정보 받아오기 실패" + error.getMessage());
-            }
-        });
-        stringRequest.setRetryPolicy
-                (new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(stringRequest);
+        myListener.update();
+        if (sos==true) requestPush(context, aed_find_request);
     }
 
     public static void sendAccept(Context context, String user_token) {
@@ -163,7 +169,7 @@ public class AEDUtil {
             dataObj.put("sender-token", FirebaseInstanceId.getInstance().getToken());
 
             //위,경도 주소로 변환
-            Geocoder mGeoCoder = new Geocoder(context, Locale.KOREA);
+            Geocoder mGeoCoder = new Geocoder(context, Locale.ENGLISH);
             List<Address> address;
             String nowAddress = "";
             try {

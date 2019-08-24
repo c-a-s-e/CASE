@@ -54,7 +54,7 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
 
         AEDUtil.sendAccept(this, sender_token);
 
-        Geocoder mGeoCoder = new Geocoder(SOSActivity.this, Locale.KOREA);
+        Geocoder mGeoCoder = new Geocoder(SOSActivity.this, Locale.ENGLISH);
         List<Address> address;
 
         try {
