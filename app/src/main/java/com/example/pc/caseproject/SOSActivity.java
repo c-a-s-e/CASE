@@ -9,8 +9,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,10 +36,10 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sos);
         SharedPreferences sharedPreferences = getSharedPreferences("sFile", MODE_PRIVATE);
-        setActionBar((Toolbar) findViewById(R.id.toolbar));
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setTitle("주변 AED 위치");
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("주변 AED 위치");
         showDialog();
 
         sender_token = sharedPreferences.getString("sender-token", null);
@@ -87,17 +88,17 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void showDialog() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         LoadingDialogFragment popup = new LoadingDialogFragment();
         popup.show(getSupportFragmentManager(), "loading");
         ft.commit();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 
     @Override
