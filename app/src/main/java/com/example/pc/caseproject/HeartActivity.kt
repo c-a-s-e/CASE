@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.support.v4.app.NavUtils
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.telephony.SmsManager
@@ -21,6 +22,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.support.v7.widget.Toolbar
+import android.app.ActionBar
 import kotlinx.android.synthetic.main.activity_heart.*
 
 
