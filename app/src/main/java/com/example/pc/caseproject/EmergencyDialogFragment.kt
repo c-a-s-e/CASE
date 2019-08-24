@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_emergency_dialog.*
 
 class EmergencyDialogFragment : DialogFragment() {
@@ -33,7 +32,7 @@ class EmergencyDialogFragment : DialogFragment() {
         dialog_textview.text = message
         button.setOnClickListener { dismiss() }
         button2.setOnClickListener {
-            val intent = Intent(context, SOSActivity::class.java)
+            val intent = Intent(context, FindAEDActivity::class.java)
             startActivity(intent)
             dismiss()
         }

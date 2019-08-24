@@ -1,12 +1,10 @@
 package com.example.pc.caseproject;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -25,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class FindAEDActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     String sender_address, aed_address, date, sender_token, nowAddress;
     Double sender_latitude, sender_longitude, aed_latitude, aed_longitude, my_latitude, my_longitude;
@@ -34,71 +32,26 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sos);
-        SharedPreferences sharedPreferences = getSharedPreferences("sFile", MODE_PRIVATE);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("주변 AED 위치");
-        showDialog();
+        setContentView(R.layout.activity_find_aed);
+        setActionBar((Toolbar) findViewById(R.id.toolbar));
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setTitle("주변 AED 위치");
 
-        sender_token = sharedPreferences.getString("sender-token", null);
-        sender_address = sharedPreferences.getString("sender_address", null);
-        sender_latitude = Double.parseDouble(sharedPreferences.getString("sender_latitude", null));
-        sender_longitude = Double.parseDouble(sharedPreferences.getString("sender_longitude", null));
-        date = sharedPreferences.getString("date", null);
-        aed_address = sharedPreferences.getString("aed_address", null);
-        aed_latitude = Double.parseDouble(sharedPreferences.getString("aed_latitude", null));
-        aed_longitude = Double.parseDouble(sharedPreferences.getString("aed_longitude", null));
-        my_latitude = Double.parseDouble(sharedPreferences.getString("my_latitude", null));
-        my_longitude = Double.parseDouble(sharedPreferences.getString("my_longitude", null));
-
-        AEDUtil.sendAccept(this, sender_token);
-
-        Geocoder mGeoCoder = new Geocoder(SOSActivity.this, Locale.ENGLISH);
+        Geocoder mGeoCoder = new Geocoder(FindAEDActivity.this, Locale.ENGLISH);
         List<Address> address;
 
         try {
-            if (mGeoCoder != null) {
-                address = mGeoCoder.getFromLocation(my_latitude, my_longitude, 1);
-                if (address != null && address.size() > 0) {
-                    String currentLocationAddress = address.get(0).getAddressLine(0).toString();
-                    nowAddress = currentLocationAddress;
-                }
+            address = mGeoCoder.getFromLocation(my_latitude, my_longitude, 1);
+            if (address != null && address.size() > 0) {
+                nowAddress = address.get(0).getAddressLine(0);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-        aedTextView = findViewById(R.id.address);
-        aedTextView.setText(aed_address);
-
-        senderAddress = findViewById(R.id.myAddress);
-        senderAddress.setText(sender_address);
-
-        myAddress = findViewById(R.id.aedAddress);
-        myAddress.setText(nowAddress);
-
-
-        FragmentManager fm = getSupportFragmentManager();
-        SupportMapFragment f = (SupportMapFragment) fm.findFragmentById(R.id.map);
         SupportMapFragment mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
-        mapFragment.getMapAsync(SOSActivity.this);
-
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    private void showDialog() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        LoadingDialogFragment popup = new LoadingDialogFragment();
-        popup.show(getSupportFragmentManager(), "loading");
-        ft.commit();
+        mapFragment.getMapAsync(FindAEDActivity.this);
     }
 
     @Override
