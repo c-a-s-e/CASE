@@ -22,6 +22,7 @@ import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toolbar
+import com.example.pc.caseproject.FeedbackUtil.Measurement
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -32,7 +33,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_heart.*
 import java.io.File
 import java.io.FileWriter
-import com.example.pc.caseproject.FeedbackUtil.Measurement
 
 
 class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUtil.APIListener, SensorEventListener, FeedbackUtil.FeedbackListener {
@@ -99,6 +99,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         unregisterReceiver(receiver)
         sensorManager.unregisterListener(this)
         saveMeasurements()
+        saveCompressions()
     }
 
     override fun onDestroy() {
@@ -164,6 +165,23 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
                         {
                             fileWriter.close()
                         }
+                )
+        compositeDisposable.add(saveDisposable)
+    }
+
+    private fun saveCompressions() {
+        val folder = Environment.getExternalStorageDirectory().absolutePath
+        val fileWriter = FileWriter(File(folder, "compressions.csv"))
+        val saveDisposable = Observable.fromIterable(feedbackUtil.compressions.toMutableList())
+                .map {
+                    fileWriter.write(it.toString())
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        { Log.d("compression", it.toString()) },
+                        { error -> Log.e("csv", error.message) },
+                        { fileWriter.close() }
                 )
         compositeDisposable.add(saveDisposable)
     }

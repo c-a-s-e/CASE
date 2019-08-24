@@ -15,7 +15,7 @@ class FeedbackUtil {
     private var lastNegativePeak: Measurement? = null
     private var lastIntersection: Measurement? = null
     val smoothMeasurements = Array(5 * 3600 * 50) { Measurement(-1, 0, 0.0) }
-    private val compressions = mutableListOf<Compression>()
+    val compressions = mutableListOf<Compression>()
     private val smoothSubject: PublishSubject<Measurement> by lazy { PublishSubject.create<Measurement>() }
     private val sliceSubject: PublishSubject<Measurement> by lazy { PublishSubject.create<Measurement>() }
     private val feedbackSubject: PublishSubject<Compression> by lazy { PublishSubject.create<Compression>() }
@@ -34,10 +34,10 @@ class FeedbackUtil {
                 .subscribe({
                     it.index.let { idx ->
                         smoothMeasurements[idx] = it
-                        if (idx > 1) {
-                            smoothMeasurements[idx - 1].value = smoothMeasurements[idx - 2].value * (1 - alpha) / 2 +
-                                    smoothMeasurements[idx - 1].value * alpha +
-                                    smoothMeasurements[idx].value * (1 - alpha) / 2
+                        smoothMeasurements.takeLast(2).apply {
+                            smoothMeasurements[idx-1].value = this[0].value * (1 - alpha) / 2 +
+                                    this[1].value * alpha +
+                                    this[2].value * (1 - alpha) / 2
                             Log.e("smooth", smoothMeasurements[idx - 1].toString())
                             sliceSubject.onNext(smoothMeasurements[idx - 1])
                         }
@@ -119,6 +119,10 @@ class FeedbackUtil {
             get() = Pair(negativePeak.time - origin.time, negativePeak.value - origin.value)
         val o2lDistance: Pair<Long, Double>
             get() = Pair(last.time - origin.time, last.value - origin.value)
+
+        override fun toString(): String {
+            return "$o2pDistance, $o2nDistance, $o2lDistance"
+        }
 
         private fun List<Long>.average(): Long {
             return sum() / size
