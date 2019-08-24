@@ -72,7 +72,7 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
 
-        AEDUtil.getAEDData(this, myLocation, myRequest, this, false);
+        //AEDUtil.getAEDData(this, myLocation, myRequest, this, false);
         mapFragment = (SupportMapFragment) (getSupportFragmentManager().findFragmentById(R.id.map));
     }
 
@@ -80,8 +80,8 @@ public class NearAEDActivity extends FragmentActivity implements OnMapReadyCallb
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                Intent intent = new Intent(NearAEDActivity.this, MainActivity.class);
-                startActivity(intent);
+                onBackPressed();
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);
