@@ -23,6 +23,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.support.v7.widget.Toolbar
 import android.app.ActionBar
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_heart.*
 
 
@@ -72,7 +73,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
     override fun onPause() {
         super.onPause()
-        cprButton.stop()
         mediaPlayer.release()
         unregisterReceiver(receiver)
     }
@@ -92,6 +92,12 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         } else {
             vibrator.vibrate(300)
         }
+        Glide.with(this).load(R.drawable.mylocation).into(chestImage)
+    }
+
+    override fun pausePulse() {
+        Glide.with(this).load(R.drawable.cpr_logo).into(chestImage)
+        cprButton.stop()
     }
 
     private fun text911() {
@@ -118,6 +124,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
     inner class MessageBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
+
         }
     }
 }
