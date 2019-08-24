@@ -7,8 +7,8 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -35,7 +35,7 @@ class ProviderActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_provider)
-        setActionBar(toolbar as Toolbar)
+        setSupportActionBar(toolbar as Toolbar)
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.title = "주변 AED 위치"

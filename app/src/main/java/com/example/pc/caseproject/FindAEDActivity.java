@@ -33,10 +33,10 @@ public class FindAEDActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_aed);
-        setActionBar((Toolbar) findViewById(R.id.toolbar));
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setTitle("주변 AED 위치");
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("주변 AED 위치");
 
         Geocoder mGeoCoder = new Geocoder(FindAEDActivity.this, Locale.ENGLISH);
         List<Address> address;
