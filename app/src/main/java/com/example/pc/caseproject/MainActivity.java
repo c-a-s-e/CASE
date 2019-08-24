@@ -30,21 +30,17 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.cprButton)
-    CPRButton cprButton;
-    @BindView(R.id.aedButton)
-    Button aedButton;
+    Button cprButton;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS};
     EmergencyDialogFragment popup;
-    ShowcaseDialog showcase;
 
     @Override
     protected void onResume() {
         if (popup != null) popup.dismiss();
-        openTutorial();
         super.onResume();
     }
 
@@ -57,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         requestAllPermissions();
-        openTutorial();
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
@@ -65,26 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCPRButtonClicked(View v) {
         Intent intent = new Intent(this, HeartActivity.class);
         startActivity(intent);
-    }
-
-    @OnClick(R.id.aedButton)
-    public void onAEDButtonClicked(View v) {
-        Intent intent = new Intent(this, NearAEDActivity.class);
-        startActivity(intent);
-    }
-
-    public void openTutorial() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences("sFile", MODE_PRIVATE);
-        boolean tutorial_opened = sharedPreferences.getBoolean("tutorial_flag", false);
-        if (!tutorial_opened) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            showcase = new ShowcaseDialog();
-            showcase.show(getSupportFragmentManager(), "showcase");
-            ft.commit();
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("tutorial_flag", true);
-            editor.apply();
-        }
     }
 
     @Override

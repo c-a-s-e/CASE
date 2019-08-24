@@ -56,7 +56,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
         cprButton.background = resources.getDrawable(R.drawable.cpr_button_static)
-        pauseButton.setOnClickListener { cprButton.stop() }
         cprButton.setOnClickListener { cprButton.start() }
         text911()
     }
@@ -82,11 +81,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     }
 
     override fun update() {
-        stepView.go(1, true)
-    }
-
-    override fun updateTime(seconds: Long) {
-        time.text = "압박 시간 ${(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}"
     }
 
     override fun updatePulse() {
@@ -104,10 +98,8 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         try {
             val smsManager = SmsManager.getDefault()
             smsManager.sendTextMessage(number, null, content, null, null)
-            stepView.go(0, true)
         } catch (e: Throwable) {
             Toast.makeText(this, "119 fail", LENGTH_LONG).show()
-            stepView.go(-1, true)
         }
     }
 
@@ -124,16 +116,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
     inner class MessageBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-            stepView.go(2, true)
-        }
-    }
-
-    data class Measurement(
-            val time: Long,
-            val value: Float
-    ) {
-        override fun toString(): String {
-            return "$time, $value\n"
         }
     }
 }
