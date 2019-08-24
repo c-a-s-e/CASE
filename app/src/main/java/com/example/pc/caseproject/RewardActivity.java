@@ -16,10 +16,10 @@ public class RewardActivity extends AppCompatActivity {
         int flag = -1;
         flag = getIntent().getIntExtra("user_flag", 1);
         if(flag == 0) {
-            Glide.with(this).load(R.drawable.reward_money2).into(reward_image);
+            Glide.with(this).load(R.drawable.reward_).into(reward_image);
         }
         else if(flag == 1) {
-            Glide.with(this).load(R.drawable.reward_money).into(reward_image);
+            Glide.with(this).load(R.drawable.reward_suppoter).into(reward_image);
         }
         else {
             Glide.with(this).load(R.drawable.mylocation).into(reward_image);
