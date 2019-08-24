@@ -6,31 +6,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationManager
 import android.media.MediaPlayer
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.telephony.SmsManager
-import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toolbar
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_heart.*
-import java.io.File
-import java.io.FileWriter
 
 
-class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUtil.APIListener, SensorEventListener {
+class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUtil.APIListener {
 
     private lateinit var myRequest: AED_FIND_REQUEST
 
@@ -38,15 +30,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     private lateinit var vibrator: Vibrator
 
     private lateinit var receiver: MessageBroadcastReceiver
-
-    private val sensorManager: SensorManager by lazy { getSystemService(Context.SENSOR_SERVICE) as SensorManager }
-    private val accelerometer: Sensor? by lazy { sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) }
-
-    private val interval = 10
-    private var lastTime: Long = -1
-    private var collectData = false
-    private val measurements = mutableListOf<Measurement>()
-    private val compositeDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,11 +51,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         cprButton.isClickable = false
         cprButton.background = resources.getDrawable(R.drawable.cpr_button_static)
         pauseButton.setOnClickListener { cprButton.stop() }
-        cprButton.setOnClickListener {
-            cprButton.start()
-            collectData = true
-            lastTime = System.currentTimeMillis()
-        }
+        cprButton.setOnClickListener { cprButton.start() }
         text911()
     }
 
@@ -82,7 +61,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         intentFilter.addAction("accepted")
         receiver = MessageBroadcastReceiver()
         registerReceiver(receiver, intentFilter)
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
     }
 
     override fun onPause() {
@@ -90,13 +68,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         cprButton.stop()
         mediaPlayer.release()
         unregisterReceiver(receiver)
-        sensorManager.unregisterListener(this)
-        saveMeasurements()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -119,45 +90,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         } else {
             vibrator.vibrate(300)
         }
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        return
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (collectData) {
-            event?.apply {
-                if (sensor.type == Sensor.TYPE_LINEAR_ACCELERATION) {
-                    val zAccel = values[2]
-                    val currentTime = System.currentTimeMillis()
-                    if (currentTime - lastTime > interval) {
-                        Log.e("accel", zAccel.toString())
-                        measurements.add(Measurement(currentTime, zAccel))
-                        lastTime = currentTime
-                    }
-                }
-            }
-        }
-    }
-
-    private fun saveMeasurements() {
-        val folder = Environment.getExternalStorageDirectory().absolutePath
-        val fileWriter = FileWriter(File(folder, "data.csv"))
-        val saveDisposable = Observable.fromIterable(measurements)
-                .map {
-                    fileWriter.write(it.toString())
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        { Log.d("measurement", it.toString()) },
-                        { error -> Log.e("csv", error.message) },
-                        {
-                            fileWriter.close()
-                        }
-                )
-        compositeDisposable.add(saveDisposable)
     }
 
     private fun text911() {
@@ -187,15 +119,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     inner class MessageBroadcastReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             stepView.go(2, true)
-        }
-    }
-
-    data class Measurement(
-            val time: Long,
-            val value: Float
-    ) {
-        override fun toString(): String {
-            return "$time, $value\n"
         }
     }
 }
