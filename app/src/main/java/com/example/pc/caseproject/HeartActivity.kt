@@ -45,6 +45,10 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
         myRequest = AED_FIND_REQUEST()
         val myLocation = findMyLocation()
+        if (myLocation==null){
+            Toast.makeText(applicationContext, "현재 위치를 받아올 수 없습니다. \n잠시후에 다시 시도하세요", Toast.LENGTH_LONG).show()
+            this.finish()
+        }
         myRequest.myLatitude = myLocation?.latitude
         myRequest.myLongitude = myLocation?.longitude
         AEDUtil.getAEDData(this, myLocation!!, myRequest, this, true)
