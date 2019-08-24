@@ -40,6 +40,7 @@ public class AEDUtil {
     public static APIListener myListener;
     private final static String []aed_info_name =
             {"sido", "gugun", "buildAddress", "org", "buildPlace", "wgs84Lon", "wgs84Lat", "distance"};
+    public static String PHONE_NUM;
 
     public interface APIListener {
         void update();
@@ -193,6 +194,7 @@ public class AEDUtil {
             dataObj.put("aed_address", myAEdRequest.getAedAddress());
             dataObj.put("aed_latitude", myAEdRequest.getAedLatitude());
             dataObj.put("aed_longitude", myAEdRequest.getAEDLongitude());
+            dataObj.put("sender-phone", PHONE_NUM);
             requestData.put("data", dataObj);
         } catch (Exception e) {
             Toast.makeText(context, e.getMessage() + "send 실패", Toast.LENGTH_LONG).show();
