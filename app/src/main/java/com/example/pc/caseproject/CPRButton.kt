@@ -24,22 +24,25 @@ class CPRButton : Button {
     private var compositeDisposable: CompositeDisposable
     private val bpm: Long = 100
     fun start() {
-        val pulseDisposable =
-                Observable.interval(0, 60 * 1000 / bpm, TimeUnit.MILLISECONDS)
-                        .flatMap {
-                            return@flatMap Observable.create<Long> { emitter ->
-                                Log.d("IntervalExample", "Create")
-                                emitter.onNext(it)
-                                emitter.onComplete()
-                            }
-                        }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
-                            text = it.toString()
-                            pulseUpdateListener.updatePulse()
-                            Log.d("IntervalExample", it.toString())
-                        }
-        compositeDisposable.add(pulseDisposable)
+        val compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(Observable.interval(0, 60 * 1000 / bpm, TimeUnit.MILLISECONDS)
+                .take(31)
+                .flatMap {
+                    return@flatMap Observable.create<Long> { emitter ->
+                        emitter.onNext(it)
+                    }
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.toInt() == 30) {
+                        pulseUpdateListener.pausePulse()
+                        text = "확인"
+                    } else {
+                        text = it.toString()
+                        pulseUpdateListener.updatePulse()
+                        Log.e("pulse", it.toString())
+                    }
+                }, {}, {}))
     }
 
     fun stop() {
@@ -48,5 +51,6 @@ class CPRButton : Button {
 
     interface PulseUpdateListener {
         fun updatePulse()
+        fun pausePulse()
     }
 }
