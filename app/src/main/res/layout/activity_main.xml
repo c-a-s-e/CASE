@@ -27,29 +27,28 @@
             android:src="@drawable/logo_red" />
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Found an unconscious person?"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
     <ImageView
         android:id="@+id/guideImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@id/guide_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:srcCompat="@drawable/guide_image" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:srcCompat="@drawable/start" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Found an unconscious person?"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/guide_text"
@@ -61,7 +60,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideImage" />
+        app:layout_constraintBottom_toTopOf="@id/guide_text2" />
 
     <TextView
         android:id="@+id/guide_text2"
@@ -74,20 +73,21 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guide_text" />
+        app:layout_constraintBottom_toTopOf="@id/guide_text3" />
 
     <TextView
         android:id="@+id/guide_text3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="If there is NO response,"
+        android:layout_margin="8dp"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guide_text2" />
+        app:layout_constraintBottom_toTopOf="@id/cprButton" />
 
     <Button
         android:id="@+id/cprButton"
@@ -105,8 +105,7 @@
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guide_text3" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/bottomGuide"

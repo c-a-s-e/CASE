@@ -21,6 +21,7 @@ import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_heart.*
 
 

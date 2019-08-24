@@ -28,7 +28,9 @@
     <ImageView
         android:id="@+id/chestImage"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/aedLocation"
         app:layout_constraintTop_toBottomOf="@id/guide" />
 
@@ -69,7 +71,9 @@
         android:id="@+id/aedLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AED 3분후 도착"
+        android:text="AED\n3분후 도착"
+        android:textSize="20dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/helpLocation"
         app:layout_constraintRight_toRightOf="parent"
@@ -79,7 +83,9 @@
         android:id="@+id/helpLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="구조요원 5분후 도착"
+        android:text="구조요원\n5분후 도착"
+        android:textSize="20dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/aedLocation"
