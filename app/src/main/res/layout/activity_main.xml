@@ -80,5 +80,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottomGuide" />
 
-
 </android.support.constraint.ConstraintLayout>
