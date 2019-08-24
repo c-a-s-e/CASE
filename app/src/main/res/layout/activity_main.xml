@@ -31,45 +31,67 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="흉부압박"
+        android:text="쓰러진 사람을 발견하셨나요?"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <TextView
-        android:id="@+id/title2"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="버튼을 눌러 시작하세요"
-        android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <ImageView
-        android:layout_width="260dp"
-        android:layout_height="260dp"
         android:id="@+id/guideImage"
-        app:layout_constraintBottom_toTopOf="@id/cprButton"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@id/guide_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title2"/>
+        app:srcCompat="@drawable/guide_image"
+        app:layout_constraintTop_toBottomOf="@id/title"/>
+
+    <TextView
+        android:id="@+id/guide_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\n양쪽 어깨를 가볍게 두드리며\n\n&quot;여보세요, 괜찮으세요?&quot;\n&quot;눈떠보세요&quot;\n"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideImage" />
+
+    <TextView
+        android:id="@+id/guide_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="무반응, 무호흡이라면"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guide_text" />
 
     <Button
         android:id="@+id/cprButton"
-        android:layout_width="@dimen/cpr_button_size"
-        android:layout_height="@dimen/cpr_button_size"
-        android:text="Start!"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="Start"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="23sp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideImage" />
+        app:layout_constraintTop_toBottomOf="@id/guide_text2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/bottomGuide"
