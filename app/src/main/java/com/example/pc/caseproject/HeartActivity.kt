@@ -13,17 +13,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.support.v4.app.NavUtils
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.telephony.SmsManager
-import android.util.Log
-import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import android.support.v7.widget.Toolbar
-import android.app.ActionBar
-import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_heart.*
 
@@ -49,7 +45,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
         myRequest = AED_FIND_REQUEST()
         val myLocation = findMyLocation()
-        if (myLocation==null){
+        if (myLocation == null) {
             Toast.makeText(applicationContext, "현재 위치를 받아올 수 없습니다. \n잠시후에 다시 시도하세요", Toast.LENGTH_LONG).show()
             this.finish()
         }
@@ -60,8 +56,11 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
         cprButton.background = resources.getDrawable(R.drawable.cpr_button_idle)
+        cprButton.start()
         cprButton.setOnClickListener { cprButton.start() }
         text911()
+        Glide.with(this).load(R.drawable.intro).into(chestImage)
+        guide.text = "Place both hands\non the lower half of the chest."
     }
 
     override fun onResume() {
@@ -82,11 +81,12 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         onBackPressed()
         return true
     }
-    
+
     override fun update() {
     }
 
     override fun updatePulse() {
+        guide.text = "Place both hands\non the lower half of the chest."
         pulseView.apply {
             alpha = 0f
             visibility = View.VISIBLE
@@ -101,7 +101,6 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         } else {
             vibrator.vibrate(300)
         }
-        Glide.with(this).load(R.drawable.intro).into(chestImage)
         pulseView.apply {
             alpha = 1f
             visibility = View.VISIBLE
@@ -114,6 +113,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
     override fun pausePulse() {
         cprButton.stop()
+        guide.text = "Stop compression and check."
     }
 
     private fun text911() {

@@ -13,12 +13,24 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#222222"
+        android:textSize="22sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
     <ImageView
         android:id="@+id/chestImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintBottom_toTopOf="@id/aedLocation"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/guide" />
 
     <RelativeLayout
         android:id="@+id/buttonWrapper"
@@ -38,22 +50,11 @@
             android:textSize="90sp" />
 
         <ImageView
+            android:id="@+id/pulseView"
             android:layout_width="270dp"
             android:layout_height="270dp"
-            android:id="@+id/pulseView"
             android:layout_centerInParent="true"
-            android:background="@drawable/cpr_button_pulse"/>
-
-        <TextView
-            android:id="@+id/count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="190dp"
-            android:elevation="10dp"
-            android:text="압박 횟수"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:background="@drawable/cpr_button_pulse" />
     </RelativeLayout>
 
 
