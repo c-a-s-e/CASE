@@ -23,6 +23,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.support.v7.widget.Toolbar
 import android.app.ActionBar
+import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_heart.*
 
@@ -58,7 +59,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
 
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
-        cprButton.background = resources.getDrawable(R.drawable.cpr_button_static)
+        cprButton.background = resources.getDrawable(R.drawable.cpr_button_idle)
         cprButton.setOnClickListener { cprButton.start() }
         text911()
     }
@@ -86,17 +87,32 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
     }
 
     override fun updatePulse() {
+        pulseView.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate()
+                    .alpha(1f)
+                    .setDuration(100)
+                    .setListener(null)
+        }
         mediaPlayer.start()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             vibrator.vibrate(300)
         }
-        Glide.with(this).load(R.drawable.mylocation).into(chestImage)
+        Glide.with(this).load(R.drawable.intro).into(chestImage)
+        pulseView.apply {
+            alpha = 1f
+            visibility = View.VISIBLE
+            animate()
+                    .alpha(0f)
+                    .setDuration(100)
+                    .setListener(null)
+        }
     }
 
     override fun pausePulse() {
-        Glide.with(this).load(R.drawable.cpr_logo).into(chestImage)
         cprButton.stop()
     }
 
