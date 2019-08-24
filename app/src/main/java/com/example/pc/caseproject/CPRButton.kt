@@ -3,10 +3,12 @@ package com.example.pc.caseproject
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.activity_heart.*
 import java.util.concurrent.TimeUnit
 
 class CPRButton : Button {
@@ -23,7 +25,6 @@ class CPRButton : Button {
     private val bpm: Long = 100
     fun start() {
         val compositeDisposable = CompositeDisposable()
-        stop()
         compositeDisposable.add(Observable.interval(0, 60 * 1000 / bpm, TimeUnit.MILLISECONDS)
                 .take(31)
                 .flatMap {
@@ -36,7 +37,9 @@ class CPRButton : Button {
                     if (it.toInt() == 30) {
                         pulseUpdateListener.pausePulse()
                         text = "Check"
+                        textSize = 30.0f
                     } else {
+                        textSize = 90.0f
                         text = it.toString()
                         pulseUpdateListener.updatePulse()
                         Log.e("pulse", it.toString())
