@@ -21,6 +21,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.support.v7.widget.Toolbar
+import android.view.View
+import android.widget.Button
+import butterknife.BindView
+import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_heart.*
 
 
@@ -52,8 +56,17 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         cprButton.pulseUpdateListener = this
         cprButton.isClickable = false
         cprButton.background = resources.getDrawable(R.drawable.cpr_button_static)
+        val reward_button = findViewById(R.id.reward_Button) as Button
+
         pauseButton.setOnClickListener { cprButton.stop() }
         cprButton.setOnClickListener { cprButton.start() }
+
+        reward_button.setOnClickListener {
+            val intent = Intent(this, RewardActivity::class.java)
+            intent.putExtra("user_flag", 0)
+            startActivity(intent)
+        }
+
         text911()
     }
 

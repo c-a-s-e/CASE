@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button aedButton;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS};

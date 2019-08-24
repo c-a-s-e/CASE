@@ -1,5 +1,6 @@
 package com.example.pc.caseproject;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,6 +10,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -23,6 +27,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -79,6 +86,14 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         myAddress = findViewById(R.id.aedAddress);
         myAddress.setText(nowAddress);
 
+        Button reward_Button = (Button) findViewById(R.id.reward_Button);
+        reward_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), RewardActivity.class);
+                intent.putExtra("user_flag", 1);
+                view.getContext().startActivity(intent);}
+        });
 
         FragmentManager fm = getSupportFragmentManager();
         SupportMapFragment f = (SupportMapFragment) fm.findFragmentById(R.id.map);
@@ -99,6 +114,14 @@ public class SOSActivity extends AppCompatActivity implements OnMapReadyCallback
         onBackPressed();
         return true;
     }
+
+//    @OnClick(R.id.reward_Button)
+//    public void onRewardButtonClicked(View v) {
+//        Log.d("reward", "dd");
+//        Intent intent = new Intent(this, RewardActivity.class);
+//        intent.putExtra("user_flag", 1);
+//        startActivity(intent);
+//    }
 
     @Override
     public void onMapReady(final GoogleMap map) {

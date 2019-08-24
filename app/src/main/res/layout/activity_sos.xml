@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".SOSActivity">
 
-    <include
-        layout="@layout/toolbar"
-        android:id="@+id/toolbar"
+    <Toolbar android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -89,6 +95,16 @@
             app:layout_constraintTop_toTopOf="@id/aedLocationIcon"
             app:layout_constraintBottom_toBottomOf="@id/aedLocationIcon"
             app:layout_constraintLeft_toRightOf="@id/aedLocationIcon"/>
+        <Button
+            android:id="@+id/reward_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reward 확인"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/aedAddress"
+            />
 
 
 
