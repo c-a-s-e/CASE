@@ -39,21 +39,7 @@ class CPRButton : Button {
                             pulseUpdateListener.updatePulse()
                             Log.d("IntervalExample", it.toString())
                         }
-        val timeDisposable =
-                Observable.interval(0, 1, TimeUnit.SECONDS)
-                        .flatMap {
-                            return@flatMap Observable.create<Long> { emitter ->
-                                emitter.onNext(it)
-                                emitter.onComplete()
-                            }
-                        }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
-                            pulseUpdateListener.updateTime(it)
-                            Log.d("IntervalExample", it.toString())
-                        }
         compositeDisposable.add(pulseDisposable)
-        compositeDisposable.add(timeDisposable)
     }
 
     fun stop() {
@@ -61,7 +47,6 @@ class CPRButton : Button {
     }
 
     interface PulseUpdateListener {
-        fun updateTime(seconds: Long)
         fun updatePulse()
     }
 }

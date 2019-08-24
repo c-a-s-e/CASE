@@ -18,7 +18,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".NavigationActivity"></activity>
         <activity android:name=".SOSActivity" />
-        <activity android:name=".NearAEDActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

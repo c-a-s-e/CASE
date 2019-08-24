@@ -13,21 +13,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:textSize="22sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <ImageView
+        android:id="@+id/chestImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@id/aedLocation"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <RelativeLayout
         android:id="@+id/buttonWrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/bottomGuide"
+        app:layout_constraintBottom_toTopOf="@id/aedLocation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -57,67 +54,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="120dp" />
+        app:layout_constraintGuide_end="20dp" />
 
-    <Button
-        android:id="@+id/pauseButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/red_button_background"
-        android:padding="8dp"
-        android:text="중지"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/bottomGuide"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonWrapper" />
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/aedLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/bottomGuide">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="자동 요청" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="진행 상황" />
-
-    </LinearLayout>
-
-    <com.shuhart.stepview.StepView
-        android:id="@+id/stepView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:paddingLeft="84dp"
-        android:paddingRight="16dp"
+        android:text="AED 3분후 도착"
+        app:layout_constraintBottom_toTopOf="@id/helpLocation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottomGuide"
-        app:sv_animationType="Circle"
-        app:sv_doneCircleColor="@color/colorAccent"
-        app:sv_doneStepLineColor="@color/colorAccent"
-        app:sv_doneStepMarkColor="@color/white"
-        app:sv_doneTextColor="@color/colorAccent"
-        app:sv_nextStepCircleColor="@color/gray"
-        app:sv_nextStepCircleEnabled="true"
-        app:sv_nextStepLineColor="#AAAAAA"
-        app:sv_nextTextColor="#AAAAAA"
-        app:sv_selectedCircleColor="@color/colorAccent"
-        app:sv_selectedStepNumberColor="@color/white"
-        app:sv_selectedTextColor="@color/colorAccent"
-        app:sv_stepLineWidth="2dp"
-        app:sv_steps="@array/cpr_steps"
-        app:sv_textSize="11sp" />
+        app:layout_constraintTop_toBottomOf="@id/chestImage" />
+
+    <TextView
+        android:id="@+id/helpLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구조요원 5분후 도착"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aedLocation" />
 
 </android.support.constraint.ConstraintLayout>
