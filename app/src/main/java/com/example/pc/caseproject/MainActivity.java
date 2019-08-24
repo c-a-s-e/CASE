@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements CallReceiver.Call
             Manifest.permission.SEND_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ANSWER_PHONE_CALLS};
     EmergencyDialogFragment popup;
     ShowcaseDialog showcase;
-    Boolean call=false;
     CallReceiver callReceiver=new CallReceiver();
 
     @Override
@@ -71,12 +70,9 @@ callReceiver.listener=this;
         IntentFilter intentFilter = new IntentFilter("android.intent.action.PHONE_STATE");
         registerReceiver(callReceiver, intentFilter);
 
-        if(call==true){
-            autoAnswer();
-        }else{
-            Log.d("callBoolean", "false");
-        }
-        Log.d("dddddddd", "ㅈㅁㄷㄱㄹㄴ홍수ㅡㅓ");
+
+        autoAnswer();
+
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
@@ -250,13 +246,6 @@ callReceiver.listener=this;
             return;
         }
         telecomManager.acceptRingingCall();
-
-//        Bundle extras = getIntent().getExtras();
-//        if(extras!=null){
-//            call=(extras.getBoolean("call"));
-//            Log.d("callBoolean", String.valueOf(call));
-//        }
-
 
     }
 

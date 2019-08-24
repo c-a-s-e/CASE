@@ -23,10 +23,8 @@ public class CallReceiver extends BroadcastReceiver {
         String state = intent.getStringExtra(tm.EXTRA_STATE);
         String incomingNumber = intent.getStringExtra(tm.EXTRA_INCOMING_NUMBER);
 
-
-
         if (state.equals(tm.EXTRA_STATE_RINGING)) {
-            ((MainActivity)context).autoAnswer();
+            //((MainActivity)context).autoAnswer();
 
             try {
                     audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
@@ -44,8 +42,7 @@ public class CallReceiver extends BroadcastReceiver {
 
             }
             if (state.equals(tm.EXTRA_STATE_OFFHOOK)) {
-//                i.putExtra("call", false);
-//                context.startActivity(i);
+
             }
 
         }
