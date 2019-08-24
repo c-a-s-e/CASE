@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private ArrayList<Integer> missingPermissions;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.SEND_SMS};
+            Manifest.permission.SEND_SMS, Manifest.permission.READ_PHONE_STATE};
     EmergencyDialogFragment popup;
 
     @Override
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         requestAllPermissions();
+        phoneNumber();
     }
 
     //주변 AED 찾기 버튼 누르면 실행될 메서드 입니다.
@@ -183,5 +187,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "현재 SOS 요청이 없습니다.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void phoneNumber(){
+        TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        String pn;
+        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!=PackageManager.PERMISSION_GRANTED){
+            return;
+        }
+        pn = tm.getLine1Number();
+        if(pn.startsWith("+82")){
+            pn=pn.replace("+82","0");
+            AEDUtil.PHONE_NUM=pn;
+        }
+        Log.d("phone", pn);
     }
 }
