@@ -1,49 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NavigationActivity">
-    <ImageView
+    android:orientation="vertical"
+    android:weightSum="5">
+
+    <fragment
+        android:id="@+id/map_navigation"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/road"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/directionWrapper"/>
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/directionWrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/road"
-        app:layout_constraintBottom_toBottomOf="@id/otherAED">
+        android:layout_height="1dp"
+        android:layout_weight="1.5">
 
         <ImageView
-            android:id="@+id/arrow"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/direction"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-        <TextView
-            android:id="@+id/direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/arrow"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/right"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.888"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="116dp"
+            android:layout_weight="4"
+            android:text="Turn Right"
+            android:textColor="@android:color/black"
+            android:textSize="35sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="84dp"
+            android:layout_marginEnd="8dp"
+            android:background="#FFFFFF"
+            android:onClick="otherAEDbuttonClicked"
+            android:paddingHorizontal="20dp"
+            android:text="View other AED location"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
     </android.support.constraint.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/otherAED"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="다른 AED 위치 보기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

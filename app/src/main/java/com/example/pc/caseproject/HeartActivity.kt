@@ -40,7 +40,7 @@ class HeartActivity : AppCompatActivity(), CPRButton.PulseUpdateListener, AEDUti
         setSupportActionBar(toolbar as? Toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = "흉부 압박"
+        supportActionBar?.title = "Chest pressure"
         mediaPlayer = MediaPlayer.create(this, R.raw.beep)
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
