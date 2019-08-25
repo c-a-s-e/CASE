@@ -29,8 +29,8 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
         Map<String, String> data = remoteMessage.getData();
         Log.e("type", data.get("type"));
         try {
-
-            if (data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()))
+            String senderToken = data.get("sender-token");
+            if (senderToken==null || senderToken.equals(FirebaseInstanceId.getInstance().getToken()))
                 return;
             if (data.get("type").equals("accept")) {
                 Intent intent = new Intent();
