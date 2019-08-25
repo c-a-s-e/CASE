@@ -29,32 +29,102 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map">
 
-        <TextView
-            android:id="@+id/aed1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="위치 정보"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="125pt"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/aed2"
+            <ImageView
+                android:id="@+id/imgAED1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/aed_1" />
+
+            <ImageView
+                android:id="@+id/imgAED2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/imageView3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgAED1"
+                app:srcCompat="@drawable/aed_2" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/aed_3" />
+
+            <TextView
+                android:id="@+id/aed2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위치 정보"
+                app:layout_constraintBottom_toTopOf="@+id/aed3"
+                app:layout_constraintStart_toEndOf="@+id/imgAED2"
+                app:layout_constraintTop_toBottomOf="@+id/aed1" />
+
+            <TextView
+                android:id="@+id/aed1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="위치 정보"
+                app:layout_constraintStart_toEndOf="@+id/imgAED1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/aed3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="위치 정보"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView3" />
+        </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:text="위치 정보"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/aed1" />
+            android:background="#FF0033"
+            android:text="Go to"
+            android:textColor="@color/white"
+            android:textSize="10pt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/aed3"
+        <Button
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="위치 정보"
+            android:layout_marginStart="5pt"
+            android:layout_marginTop="5pt"
+            android:background="#FF0033"
+            android:text="Go to"
+            android:textColor="@color/white"
+            android:textSize="10pt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button1" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5pt"
+            android:layout_marginTop="3pt"
+            android:background="#FF0033"
+            android:text="Go to"
+            android:textColor="@color/white"
+            android:textSize="10pt"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/aed2"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
