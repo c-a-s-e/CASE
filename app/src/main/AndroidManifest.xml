@@ -2,12 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pc.caseproject">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -17,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ProviderActivity" />
 
-        <activity android:name=".ProviderActivity"/>
         <activity android:name=".NavigationActivity" />
         <activity android:name=".FindAEDActivity" />
         <activity android:name=".MainActivity">
@@ -35,6 +29,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pc.caseproject.MainActivity" />
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc" />
 
         <service
             android:name=".MessagingService"
@@ -44,9 +41,23 @@
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc" />
+        <service
+            android:name=".CallWaitService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 </manifest>

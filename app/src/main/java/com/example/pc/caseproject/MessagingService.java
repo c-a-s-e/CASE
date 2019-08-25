@@ -28,35 +28,42 @@ public class MessagingService extends com.google.firebase.messaging.FirebaseMess
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();
         Log.e("type", data.get("type"));
-        if (data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken())) return;
-        if (data.get("type").equals("accept")) {
-            Intent intent = new Intent();
-            intent.setAction("accepted");
-            sendBroadcast(intent);
-        } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                return; //자기 위치 파악 불가하면 그냥 무시
-            Intent intent = new Intent(this, ProviderActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("sender-token", data.get("sender-token"));
-            intent.putExtra("sender_address", data.get("sender_address"));
-            intent.putExtra("sender_latitude", data.get("sender_latitude"));
-            intent.putExtra("sender_longitude", data.get("sender_longitude"));
-            intent.putExtra("date", data.get("date"));
-            intent.putExtra("aed_address", data.get("a[ed_address"));
-            intent.putExtra("aed_latitude", data.get("aed_latitude"));
-            intent.putExtra("aed_longitude", data.get("aed_longitude"));
-            Log.e("msg", data.get("aed_latitude")+"");
+        try {
 
-            //Receiver 위치 파악
-            LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (data.get("sender-token").equals(FirebaseInstanceId.getInstance().getToken()))
+                return;
+            if (data.get("type").equals("accept")) {
+                Intent intent = new Intent();
+                intent.setAction("accepted");
+                sendBroadcast(intent);
+            } else {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                    return; //자기 위치 파악 불가하면 그냥 무시
+                Intent intent = new Intent(this, ProviderActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("sender-token", data.get("sender-token"));
+                intent.putExtra("sender_address", data.get("sender_address"));
+                intent.putExtra("sender_latitude", data.get("sender_latitude"));
+                intent.putExtra("sender_longitude", data.get("sender_longitude"));
+                intent.putExtra("date", data.get("date"));
+                intent.putExtra("aed_address", data.get("a[ed_address"));
+                intent.putExtra("aed_latitude", data.get("aed_latitude"));
+                intent.putExtra("aed_longitude", data.get("aed_longitude"));
+                Log.e("msg", data.get("aed_latitude") + "");
 
-            intent.putExtra("my_latitude", myLocation.getLatitude());
-            intent.putExtra("my_longitude", myLocation.getLongitude());
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                //Receiver 위치 파악
+                LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-            showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요", pendingIntent);
+                intent.putExtra("my_latitude", myLocation.getLatitude());
+                intent.putExtra("my_longitude", myLocation.getLongitude());
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+
+                showNotification("주변에서 위급상황 발생", data.get("sender_address") + "에서 위급상황 발생. AED를 가져다주세요", pendingIntent);
+            }
+        }
+        catch(Exception ex) {
+
         }
     }
 
