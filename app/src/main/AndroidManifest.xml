@@ -24,8 +24,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ProviderActivity" />
 
-        <activity android:name=".ProviderActivity"/>
         <activity android:name=".NavigationActivity" />
         <activity android:name=".FindAEDActivity" />
         <activity android:name=".MainActivity">
@@ -42,6 +42,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pc.caseproject.MainActivity" />
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc" />
 
         <service
             android:name=".MessagingService"
@@ -51,9 +54,10 @@
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC5oOyC8TGp55vhevebPTPnnWZict3Njbc" />
+        <service
+            android:name=".CallWaitService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
